@@ -3,6 +3,7 @@
 
 ### Progress So Far: 
 **> NEW <**
+* Added ReadFile()
 * **-------------------------------------------------------------------**
 * Added main.py
 * Removed aa_colors.py, a_git_guide.txt and aa_main.py
