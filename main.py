@@ -1,5 +1,8 @@
 # CS 140 MP1: The Next Iron Chef
-# Christopher Vizcarra
+
+# Team Cypher-VizVille
+
+# Christopher Vizcarra 2013-58235
 # Cyan Villarin
 
 class Dish():
