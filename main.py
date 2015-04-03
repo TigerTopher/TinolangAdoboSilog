@@ -5,13 +5,22 @@
 # Christopher Vizcarra 2013-58235
 # Cyan Villarin
 
-class Dish():
+class Iron_Chef():
 	def __init__(self):
-		self.input = open("input.txt")
-		self.output = open("201310940.txt", "a")
+		self.tasklist = "tasklist.txt"
+		self.dishAtStove = "_empty_"		
+		self.dishWaiting = []
 
-	def Start(self):
-		# blah blah blah
+	def whatIsNext(self):
+		# ...
 
-a = Dish()
-a.Start()
+	def readTaskList(self):
+		for x in self.tasklist.readlines():
+			dish = list(x)
+			# ...
+
+
+	def main(self):
+		# ...
+
+a = Iron_Chef()
