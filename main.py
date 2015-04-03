@@ -11,8 +11,20 @@ import ScrolledText 		# For scrolledText widget used in messaging, statuses and 
 
 class Dish():
 	def __init__(self):
-		self.name = []
+		self.name = ""
 		self.time = 0
+
+	def setName(self, newName):
+		self.name = newName
+
+	def setTime(self, newTime):
+		self.time = newTime
+
+	def getName(self):
+		return self.name
+
+	def getTime(self):
+		return self.time
 
 class Iron_Chef():
 	def __init__(self):
@@ -22,26 +34,29 @@ class Iron_Chef():
 	def readFile(self):							
 		f = open("tasklist.txt", "r")					
 
-		for lineList in f.readlines():					# Separates lines from file
-			dish = Dish()		
+		for lineList in f.readlines():					# Iterate through all the lines in the file
+			dish = Dish()								# Instantiate Dish Class.
 
-			letterList = list(lineList)					# Converts the line (string) to list format
-			for letter in letterList:					# Separates letters from lines
-				if letter != " " and letter != "\n":	# Filters " " and "\n" from the lines
-					dish.name.append(letter)		
+			lineList = lineList.strip("\n")				#Remove /n per line
 
-			dish.time = dish.name[len(dish.name) - 1]	# Gets the time at the end of the line
-			dish.name.pop()								# Then removes it from the list
-			dish.name = "".join(dish.name)				# Converts the list to string
+			singleLine = lineList.split(" ")			#Separate the line into two elements [name and time respectively]
 
-			self.dishWaiting.append(dish.name)			# Dish Names = odd index
-			self.dishWaiting.append(dish.time)			# Dish TimeStart = even index
+			#Putting it as dish attributes...
+			dish.setName(singleLine[0])					
+			dish.setTime(int(singleLine[1]))			#Typecast since time is char initially
+
+			#Append the object in the dishWaiting list
+			self.dishWaiting.append(dish)
 
 		f.close()
 
 	def start(self):
 		self.readFile()
-		print self.dishWaiting
+
+		""" TEST PRINTING IF DISH WORKED
+		for dish in self.dishWaiting:
+			print dish.getName(), dish.getTime()
+		"""
 
 class GUI:
 	def __init__(self):
