@@ -3,17 +3,45 @@
 # Team Cypher-VizVille
 
 # Christopher Vizcarra 2013-58235
-# Cyan Villarin
+# Cyan Villarin 2013-10940
 
-from Tkinter import * # For python version 2.7 only.
-from tkFileDialog import * # For built-in Tkinter file dialogs.
-import ScrolledText # For scrolledText widget used in messaging, statuses and deletion.
+from Tkinter import * 		# For python version 2.7 only.
+from tkFileDialog import * 	# For built-in Tkinter file dialogs.
+import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
+
+class Dish():
+	def __init__(self):
+		self.name = []
+		self.time = 0
 
 class Iron_Chef():
 	def __init__(self):
-		self.tasklist = "tasklist.txt"
-		self.dishAtStove = "__empty__"		
+		self.dishAtStove = ""		
 		self.dishWaiting = []
+
+	def readFile(self):							
+		f = open("tasklist.txt", "r")					
+
+		for lineList in f.readlines():					# Separates lines from file
+			dish = Dish()		
+
+			letterList = list(lineList)					# Converts the line (string) to list format
+			for letter in letterList:					# Separates letters from lines
+				if letter != " " and letter != "\n":	# Filters " " and "\n" from the lines
+					dish.name.append(letter)		
+
+			dish.time = dish.name[len(dish.name) - 1]	# Gets the time at the end of the line
+			dish.name.pop()								# Then removes it from the list
+			dish.name = "".join(dish.name)				# Converts the list to string
+
+			self.dishWaiting.append(dish.name)			# Dish Names = odd index
+			self.dishWaiting.append(dish.time)			# Dish TimeStart = even index
+
+		f.close()
+
+	def start(self):
+		self.readFile()
+		print self.dishWaiting
 
 class GUI:
 	def __init__(self):
@@ -65,9 +93,5 @@ class GUI:
 
 		self.root.mainloop()
 
-
-
-
-
-window = GUI()
-window.show()
+a = Iron_Chef()
+a.start()
