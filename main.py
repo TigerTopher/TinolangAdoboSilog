@@ -10,7 +10,39 @@ from tkFileDialog import * 	# For built-in Tkinter file dialogs.
 import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
 
 class Scheduler():
-	def __init__(self):
+	def __init__(self, dishWaiting):
+		self.dishWaiting = dishWaiting
+		self.time = 0
+		self.current = Dish()
+		self.ready = []
+		self.assistants = []
+		self.remarks = ""
+
+	def printStatus(self):
+		print str(self.time) + " ," + self.current.name + " ," + str(self.current.time) + " ," + str(self.ready) + " ," + str(self.assistants) + " ," + self.remarks
+
+	def FCFS(self):
+		while self.dishWaiting != []:
+			self.time = self.time + 1
+			self.current.name = self.dishWaiting[0].name
+			self.current.time = self.dishWaiting[0].instructions[0][1]
+			self.remarks = str(self.current.name + " arrives")
+			self.dishWaiting.pop(0)
+
+			while self.current.time != 0:
+				self.current.time = int(self.current.time) - 1
+				self.printStatus()
+
+	def SJF(self):
+		pass
+
+	def Priority(self):
+		pass
+
+	def RoundRobin(self):
+		pass
+
+	def MultiQueue(self):
 		pass
 		
 class Dish():
@@ -94,12 +126,10 @@ class Iron_Chef():
 
 			f.close()
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 78191ef882abe00e9b52be116c9e8227a491991f
 	def start(self):
 		self.readFile()
+		b = Scheduler(self.dishWaiting)
+		b.FCFS()
 
 		"""TEST PRINTING IF DISH WORKED
 		for dish in self.dishWaiting:
@@ -109,11 +139,6 @@ class Iron_Chef():
 			print "Instructions:"
 			print dish.showQueue()
 		"""
-
-
-
-
-		
 
 class GUI:
 	def __init__(self):
