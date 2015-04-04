@@ -132,27 +132,27 @@ class Scheduler():
 				 [ Print status outside na lang to tell na tapos na]
 	"""
 
-	def FCFS(self):						# First come, First serve
-		self.time = 0
+	def FCFS(self):								# First come, First serve
+		while self.dishWaiting != []:			# Here we have all this dish that haven't arrive yet.
+			self.time = self.time + 1 			# This is our time variable that iterates
+			for dish in self.dishWaiting:		# Iterates through all the dish in dishWaiting
+				if dish.time == self.time:		# Checks if a dish's arrival time is equal to scheduler's time
+					for inst in dish.instructions:		# Iterates through the instructions of a dish
+						if inst[0] == "cook":
+							self.ready.append(dish)		# If it is, append that dish to the ready queue
+						elif inst[0] == "prep":
+							self.preparing.append(dish)
+				if self.preparing != []:				# Checks if the prep queue is empty
+					for dish in self.preparing:			# Iterates through all the dishes in prep queue
+						dish.instructions[0][1] = str(int(dish.instructions[0][1]) - 1)	# This should decrement prep time by 1, but it doesnt work
+						if dish.instructions[0][1] == 0:	# Now, if prep time is 0
+							dish.instructions.pop(0)		# Pop the current instruction
+			if self.ourStove.isOccupied == False:
+				if self.ourStove.isClean == True:
+					pass
+					# Huhuhu sorry Toph, naguguluhan talaga ako :(				
 
-
-		"""
-		while self.dishWaiting != []:	# Here we have all this dish that haven't arrive yet.
-
-			self.time = self.time + 1 	#This is our time variable that iterates
-
-			self.dishWaiting.pop(0)
-			self.current.name = self.dishWaiting[0].name
-
-			self.current.time = self.dishWaiting[0].instructions[0][1]
-
-			self.remarks = str(self.current.name + " arrives")
-
-			self.dishWaiting.pop(0)
-
-			while self.current.time != 0:
-				self.current.time = int(self.current.time) - 1
-				self.printStatus()"""
+						
 
 	def SJF(self):
 		pass
