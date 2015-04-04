@@ -141,8 +141,80 @@ class Scheduler():
 
 			# COOKING
 			
-
+			# Check if the stove is occupied
 			
+			#a. Empty
+			if self.ourStove.isOccupied == False:
+
+				# Check if the stove is clean
+				if self.ourStove.isClean == False:
+
+					# If not, set the stove to clean
+					self.ourStove.isClean = True
+
+				# Check if there is a dish in the temp list or check if the stove is not clean
+				if self.temporary != []:
+
+						# If there is, remove the one in temp list and assign to ready/prep queue
+						for y in range(0, len(self.temporary)):
+							# This asks kung saan yun at kung may kasunod pa na instruction...
+							if( (self.temporary[y].getName() == nameToMatch) and (self.dishWaiting[y].showQueue != [] )):
+								temp = self.temporary[y].dequeue()
+								temp.insert(0, self.temporary[y].getName())
+
+								if(temp[1][0] == "cook"):						#Go to ready state
+									self.ready.insert(0, temp)
+
+								elif(temp[1][0] == "prep"):
+									self.preparing.insert(0, temp)	
+
+				# If there are no more dish in the temp list, print
+				else:
+					self.printStatus()
+
+				# Check if there is a ready dish
+				if self.ready != []:
+
+					# If there is a ready dish, check if stove is warm
+					if self.ourStove.isHot == True:
+
+						# If stove is hot, transfer dish to cook and change state to occupied
+						self.ourStove.cook(self.ready[0])	# Not sure kung tama ito? Tranfer to cook
+						self.ready.pop(0)					# So remove from ready list...
+						self.ourStove.isOccupied = True
+
+					# If there is none in the ready list
+					else:
+						# Preheat the stove, then print?
+						self.ourStove.isHot = True
+						self.printStatus()
+
+
+			#b. Occupied
+			elif self.ourStove.isOccupied == True:
+				# Subtract 1 time in cook time of the current dish
+				# Di ko sure saan ko kukunin ung cook time so dun na lng sa instruction set, or...
+				# I think I missed something heheh
+				self.ourStove.current[0].instructions[0][1] = int(self.ourStove.current[0].instructions[0][1]) - 1
+				
+				# Check if the cook time is 0
+				if self.ourStove.current[0].instructions[0][1] == 0:
+					# If it is 0, remove the instruction set
+					self.ourStove.current[0].instructions.pop(0)
+
+					# Check if there are still remaining instruction
+					if self.ourStove.current[0].instructions != []:
+						# If there is, put it in temporary list
+						self.temporary.append(self.ourStove.current[0])
+						# Remove it from cooking
+						self.ourStove.pop(0)
+						# Change the value to unoccupied
+						self.ourStove.isOccupied = False
+				# If it is not zero
+				else:
+					# Proceed with printing
+					self.printStatus()
+
 			# If the instruction is empty, we remove it in dishWaiting...
 			for x in range(0, len(self.dishWaiting)):
 				if(self.dishWaiting[x].showQueue == []):
