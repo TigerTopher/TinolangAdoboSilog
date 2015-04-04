@@ -31,14 +31,18 @@ class Iron_Chef():
 		self.dishAtStove = ""		
 		self.dishWaiting = []
 
-	def readFile(self):							
+	def readFile(self):
+	
+	""" Read file includes reading tasklist, reading recipes
+		If a tasklist has a formatting error, we terminate.
+		If a recipe file is missing, we ommit that dish in dishes to be cooked"""
+
 		f = open("tasklist.txt", "r")					
 
 		for lineList in f.readlines():					# Iterate through all the lines in the file
 			dish = Dish()								# Instantiate Dish Class.
 
 			lineList = lineList.strip("\n")				#Remove /n per line
-
 			singleLine = lineList.split(" ")			#Separate the line into two elements [name and time respectively]
 
 			#Putting it as dish attributes...
@@ -49,6 +53,11 @@ class Iron_Chef():
 			self.dishWaiting.append(dish)
 
 		f.close()
+
+
+
+
+
 
 	def start(self):
 		self.readFile()
