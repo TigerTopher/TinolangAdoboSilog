@@ -13,6 +13,9 @@ class Scheduler():
 	def __init__(self):
 		pass
 		
+	def run():
+		pass
+		
 class Dish():
 	def __init__(self):
 		self.name = ""
@@ -51,6 +54,7 @@ class Iron_Chef():
 	def __init__(self):
 		self.dishAtStove = ""		
 		self.dishWaiting = []
+		self.SchedulerInstance = Scheduler()
 
 	def readFile(self):
 	
@@ -95,6 +99,7 @@ class Iron_Chef():
 			f.close()
 
 	def start(self):
+
 		self.readFile()
 
 		"""TEST PRINTING IF DISH WORKED
@@ -156,5 +161,7 @@ class GUI:
 
 		self.root.mainloop()
 
-a = Iron_Chef()
-a.start()
+
+ironChefInstance = Iron_Chef()
+ironChefInstance.start()			#Read file ka muna
+

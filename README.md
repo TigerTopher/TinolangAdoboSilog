@@ -6,12 +6,14 @@
 
 Arc 4
 ---
++ Added scheduler class
++ Instantiated Scheduler class inside Iron Chef class
++ Send dishwaiting as parameter
+
 Things to do:
-+ Add a scheduler
-+ Create scheduler class
 + Create a loop that iterates (parang step counter)
 + Per Iteration, match if a food arrives
-+ ...
++ Generally, implement a First Come First Serve Scheduler
 
 Arc 3
 ---
