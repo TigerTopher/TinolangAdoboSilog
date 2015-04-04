@@ -90,38 +90,64 @@ class Scheduler():
 					
 					#If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state. (SEE INSTRUCTION)
 					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+
+						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
+
 						temp1 = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
-						temp = []
-						temp.insert(0, temp1[1])
-						temp.insert(0, temp1[0])
-						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						temp1.insert(0, self.dishWaiting[i].getName())	#Added the name
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
-						print self.time, temp
+						# print self.time, temp
 
-						if(temp[1][0] == "cook"):						#Go to cook
-							self.ready.insert(0, temp)
+						if(temp1[1] == "cook"):						#Go to ready state
+							self.ready.insert(0, temp1)
 
-						elif(temp[1][0] == "prep"):
-							temp[1][1] == temp[1][1] + 1 				# We added this +1 because it will be subtracted in the preparation...
-							self.preparing.insert(0, temp)
+						elif(temp1[1] == "prep"):
+							temp1[2] == temp1[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.insert(0, temp1)
 						
 
 			
 			#2. PREPARATION
 
-			#a. Check if preparation is empty
-#			if(self.preparing != []):
-#				for x in range(0, len( self.preparing)):
-#					if x
+			#a. Check if preparation is not empty
+
+			if(self.preparing != []):
+
+				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
+				for x in range(0, len(self.preparing)):
+					print self.preparing[x][2]
+					self.preparing[x][2] = int(self.preparing[x][2]) - 1
+
+					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+					
+					if self.preparing[x][2] == 0:
+						nameToMatch = (self.preparing.pop(x))[0]
+						
+						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
+						# If there is, (transfer it to the ready state -if cooking yung next state)
+
+						for y in range(0, len(self.dishWaiting)):
+							# This asks kung saan yun at kung may kasunod pa na instruction...
+							if( (self.dishWaiting[y].getName() == nameToMatch) and (self.dishWaiting[y].showQueue != [] )):
+								temp = self.dishWaiting[y].dequeue()
+								temp.insert(0, self.dishWaiting[y].getName())
+
+								if(temp[1][0] == "cook"):						#Go to ready state
+									self.ready.insert(0, temp)
+
+								elif(temp[1][0] == "prep"):
+									self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 
 
-			#b. If not, iterate through the list, and subtract 1 in preparation timer. 
-			#	-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
-			#	If there is, (transfer it to the ready state -if cooking yung next state)
+			# COOKING
+			
 
+			
+			# If the instruction is empty, we remove it in dishWaiting...
+			for x in range(0, len(self.dishWaiting)):
+				if(self.dishWaiting[x].showQueue == []):
+					self.dishWaiting.pop(x)
 
-
-		#a. If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state.
 						
 
 	def SJF(self):
@@ -216,7 +242,7 @@ class Iron_Chef():
 
 			for instruction in f.readlines():			#Parse instructions, put the instructions into the object
 				instruction = (instruction.strip("\n")).split(" ")
-				self.dishWaiting[x].enqueue(instruction[0], instruction[1])
+				self.dishWaiting[x].enqueue(instruction[0], int(instruction[1]))
 
 			f.close()
 
