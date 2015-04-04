@@ -9,6 +9,10 @@ from Tkinter import * 		# For python version 2.7 only.
 from tkFileDialog import * 	# For built-in Tkinter file dialogs.
 import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
 
+class Scheduler():
+	def __init__(self):
+		pass
+		
 class Dish():
 	def __init__(self):
 		self.name = ""
@@ -73,7 +77,7 @@ class Iron_Chef():
 		f.close()
 
 
-		for x in range(0, len(self.dishWaiting)):					#Iterate throughout all the dishes declared at tasklist
+		for x in range(0, len(self.dishWaiting)):		#Iterate throughout all the dishes declared at tasklist
 
 			dishFilename = self.dishWaiting[x].getName()
 			dishFilename = dishFilename + ".txt"		
@@ -82,15 +86,18 @@ class Iron_Chef():
 			temp = f.readline()							#Temp would hold the priority value
 			temp = ((temp.strip("\n")).split(" "))[1]
 		
-			self.dishWaiting[x].setPriority(temp)						#Let's set it up already
+			self.dishWaiting[x].setPriority(temp)		#Put Priority into respective object
 
-			for instruction in f.readlines():
+			for instruction in f.readlines():			#Parse instructions, put the instructions into the object
 				instruction = (instruction.strip("\n")).split(" ")
 				self.dishWaiting[x].enqueue(instruction[0], instruction[1])
 
 			f.close()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78191ef882abe00e9b52be116c9e8227a491991f
 	def start(self):
 		self.readFile()
 
