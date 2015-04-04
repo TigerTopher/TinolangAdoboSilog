@@ -2,8 +2,16 @@
 ### Developed by TigerTopher - CyanVille
 
 ### Progress So Far: 
-**> NEW <**
 *See Readme.md. "+ -> Topher", "- -> Cyan" *
+
+Arc 4
+---
+Things to do:
++ Add a scheduler
++ Create scheduler class
++ Create a loop that iterates (parang step counter)
++ Per Iteration, match if a food arrives
++ ...
 
 Arc 3
 ---
