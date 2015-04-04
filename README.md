@@ -3,8 +3,14 @@
 
 ### Progress So Far: 
 **> NEW <**
-+ Revised Readfile
-+ Added ReadFile()
+*See Readme.md. "+ -> Topher", "- -> Cyan" *
+
+---
++ Finished implementing in self.dishWaiting object. This includes name, arrival time, priority, and instructions(procedure, time)
++ Added Readfile for all other files.
++ Added Tiger Picture. (It's something >.<)
++ Revised Readfile for Tasklist.
+- Added ReadFile() 
 ---
 - Added main.py
 - Removed aa_colors.py, a_git_guide.txt and aa_main.py
@@ -16,8 +22,5 @@
 + Edited README.md
 + Created Main
 
-http://www.auburn.edu/cspd/promo/cd/images/tigereyes_big.gif
-
 ![alt text][logo]
-
 [logo]: http://www.auburn.edu/cspd/promo/cd/images/tigereyes_big.gif "TigerTopher | CyanVille"

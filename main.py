@@ -13,6 +13,8 @@ class Dish():
 	def __init__(self):
 		self.name = ""
 		self.time = 0
+		self.priority = 0
+		self.instructions = []
 
 	def setName(self, newName):
 		self.name = newName
@@ -20,11 +22,26 @@ class Dish():
 	def setTime(self, newTime):
 		self.time = newTime
 
+	def setPriority(self, newPriority):
+		self.priority = newPriority
+
 	def getName(self):
 		return self.name
 
 	def getTime(self):
 		return self.time
+
+	def getPriority(self):
+		return self.priority
+
+	def enqueue(self, procedure, time):
+		self.instructions.append([procedure,time])
+
+	def dequeue(self):
+		return self.instructions.pop()
+
+	def showQueue(self):
+		return self.instructions
 
 class Iron_Chef():
 	def __init__(self):
@@ -33,7 +50,8 @@ class Iron_Chef():
 
 	def readFile(self):
 	
-	""" Read file includes reading tasklist, reading recipes
+		"""TASKLIST READING and RECIPE READING:
+		Read file includes reading tasklist, reading recipes
 		If a tasklist has a formatting error, we terminate.
 		If a recipe file is missing, we ommit that dish in dishes to be cooked"""
 
@@ -55,6 +73,24 @@ class Iron_Chef():
 		f.close()
 
 
+		for x in range(0, len(self.dishWaiting)):					#Iterate throughout all the dishes declared at tasklist
+
+			dishFilename = self.dishWaiting[x].getName()
+			dishFilename = dishFilename + ".txt"		
+			f = open(dishFilename, "r")
+			
+			temp = f.readline()							#Temp would hold the priority value
+			temp = ((temp.strip("\n")).split(" "))[1]
+		
+			self.dishWaiting[x].setPriority(temp)						#Let's set it up already
+
+			for instruction in f.readlines():
+				instruction = (instruction.strip("\n")).split(" ")
+				self.dishWaiting[x].enqueue(instruction[0], instruction[1])
+
+			f.close()
+
+
 
 
 
@@ -62,9 +98,13 @@ class Iron_Chef():
 	def start(self):
 		self.readFile()
 
-		""" TEST PRINTING IF DISH WORKED
+		"""TEST PRINTING IF DISH WORKED
 		for dish in self.dishWaiting:
-			print dish.getName(), dish.getTime()
+			print "Dish Name: ", dish.getName()
+			print "Dish Time: ", dish.getTime()
+			print "Dish Priority: ", dish.getPriority()
+			print "Instructions:"
+			print dish.showQueue()
 		"""
 
 class GUI:
