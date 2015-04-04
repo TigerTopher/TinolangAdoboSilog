@@ -12,7 +12,7 @@ FCFS Algorithm
 
 		1. Check all the dishes in dishWaiting. Check if there is an upcoming dish by matching the time of arrival with the current time.
 			a. If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state.
-			
+				If it is to be put in the preparation state, note that the time should be incremented by 1. (it would be mistakenly decremented in preparation)
 
 		2. PREPARATION
 			a. Check if preparation is empty

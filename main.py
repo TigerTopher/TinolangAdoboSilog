@@ -71,87 +71,57 @@ class Scheduler():
 
 	def printStatus(self):
 		print str(self.time) + " ," + self.current.name + " ," + str(self.current.time) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
-		
 
-	"""First come, first serve steps:
-		
-		Iterate time.
-
-		1. Check all the dishes in dishWaiting. Check if there is an upcoming dish by matching the time of arrival with the current time.
-			a. If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state.
-			
-
-		2. PREPARATION
-			a. Check if preparation is empty
-			b. If not, iterate through the list, and subtract 1 in preparation timer. 
-				-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
-					If there is, (transfer it to the ready state -if cooking yung next state)
-
-		3. COOKING
-
-			Check if the stove is occupied
-				a. -- Empty:
-					> Check if clean. 
-						- Check if there is a dish in the temporary list or check if the stove is not clean. 
-							If there is, we don't proceed to cooking
-							> Set Stove to be clean
-							> Remove the one in temporary list and assign in either prep or ready
-
-						- Check if there is a ready dish.
-							- If yes, check if the stove is warm.
-								- If yes, transfer the dish to the cooking.
-								- Change the state to occupied.
-
-
-							- If not, preheat the stove... go to printing
-
-						-> If not, proceed to printing....
-
-
-
-				b. -- Occupied:
-					Proceed. Subtract 1 time in the cook time of the current dish.
-					See if the current dish's cook time is zero. 
-						-> If it is zero, remove the respective instruction set.
-							And see if there is still a remaining instruction.
-							If there is still a remaining instruction put it in temporary list first.
-							Remove it from cooking. Change the value to unoccupied.
-
-							
-
-						-> If not just proceed with printing
-
-		-> Print Status
-		-> Check if stove is empty and 
-				 if ready is empty and
-				 if preparation is empty and
-				 if not switching [Context time switch] and
-				 if dishWaiting is empty
-
-				 -If all of these are satisfied, we now terminate.
-				 [ Print status outside na lang to tell na tapos na]
-	"""
 
 	def FCFS(self):								# First come, First serve
-		while self.dishWaiting != []:			# Here we have all this dish that haven't arrive yet.
-			self.time = self.time + 1 			# This is our time variable that iterates
-			for dish in self.dishWaiting:		# Iterates through all the dish in dishWaiting
-				if dish.time == self.time:		# Checks if a dish's arrival time is equal to scheduler's time
-					for inst in dish.instructions:		# Iterates through the instructions of a dish
-						if inst[0] == "cook":
-							self.ready.append(dish)		# If it is, append that dish to the ready queue
-						elif inst[0] == "prep":
-							self.preparing.append(dish)
-				if self.preparing != []:				# Checks if the prep queue is empty
-					for dish in self.preparing:			# Iterates through all the dishes in prep queue
-						dish.instructions[0][1] = str(int(dish.instructions[0][1]) - 1)	# This should decrement prep time by 1, but it doesnt work
-						if dish.instructions[0][1] == 0:	# Now, if prep time is 0
-							dish.instructions.pop(0)		# Pop the current instruction
-			if self.ourStove.isOccupied == False:
-				if self.ourStove.isClean == True:
-					pass
-					# Huhuhu sorry Toph, naguguluhan talaga ako :(				
+		self.time = 0
 
+
+		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.switching == True) or (self.dishWaiting != [])):
+			self.time = self.time + 1
+	
+			# 1. Check all the dishes in dishWaiting.
+
+			for i in range(0, len(self.dishWaiting)):
+
+				# Check if there is an upcoming dish by matching the time of arrival with the current time.
+
+				if (self.dishWaiting[i].getTime() == self.time) :
+					
+					#If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state. (SEE INSTRUCTION)
+					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+						temp1 = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
+						temp = []
+						temp.insert(0, temp1[1])
+						temp.insert(0, temp1[0])
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
+						print self.time, temp
+
+						if(temp[1][0] == "cook"):						#Go to cook
+							self.ready.insert(0, temp)
+
+						elif(temp[1][0] == "prep"):
+							temp[1][1] == temp[1][1] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.insert(0, temp)
+						
+
+			
+			#2. PREPARATION
+
+			#a. Check if preparation is empty
+#			if(self.preparing != []):
+#				for x in range(0, len( self.preparing)):
+#					if x
+
+
+			#b. If not, iterate through the list, and subtract 1 in preparation timer. 
+			#	-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+			#	If there is, (transfer it to the ready state -if cooking yung next state)
+
+
+
+		#a. If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state.
 						
 
 	def SJF(self):
@@ -198,7 +168,7 @@ class Dish():
 		self.instructions.append([procedure,time])
 
 	def dequeue(self):
-		return self.instructions.pop()
+		return self.instructions.pop(0)
 
 	def showQueue(self):
 		return self.instructions
