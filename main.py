@@ -9,29 +9,150 @@ from Tkinter import * 		# For python version 2.7 only.
 from tkFileDialog import * 	# For built-in Tkinter file dialogs.
 import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
 
+class Stove():
+	def __init__(self):
+		self.current = []
+		self.isHotVar = False
+		self.isCleanVar = True
+		self.isOccupiedVar = False
+
+	def cook(self, newDish):
+		if (self.isHotVar == True) and (self.isCleanVar == True) and (isOccupiedVar == False):
+			
+			self.current.append(newDish)
+			self.isOccupiedVar = True
+			self.isCleanVar = False
+
+			return True
+		else:
+			return False
+
+	def remove(self):
+		if(isOccupiedVar == False):		# Nothing was removed
+			return False
+
+		# If indeed there is...
+		self.isOccupiedVar = False
+		self.isHotVar = False
+		self.isCleanVar = False
+
+		return self.current.pop()
+
+	def isOccupied(self):
+		return self.isOccupiedVar
+
+	def isHot(self):
+		return self.isHotVar
+
+	def isClean(self):
+		return self.isCleanVar
+
+	def preheat(self):
+		self.isHotVar = True
+
+	def clean(self):
+		self.isCleanvar = True
+
 class Scheduler():
 	def __init__(self, dishWaiting):
 		self.dishWaiting = dishWaiting
 		self.time = 0
-		self.current = Dish()
-		self.ready = []
-		self.assistants = []
+
+		#self.current = Dish()		# This is the current dish that is
+		self.ourStove = Stove()
+		self.ready = []				# This are the ones waiting for the stove
+		self.preparing = []			# This are the ones in preparing state
+		self.switching = False
+		self.temporary = []
+
+		# self.numAssistants = -1 	# -1 Indicates unlimited assistants. Unlimited assistants mean that there is no limit in number of dishes in preparing state
+
 		self.remarks = ""
 
 	def printStatus(self):
-		print str(self.time) + " ," + self.current.name + " ," + str(self.current.time) + " ," + str(self.ready) + " ," + str(self.assistants) + " ," + self.remarks
+		print str(self.time) + " ," + self.current.name + " ," + str(self.current.time) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
+		
 
-	def FCFS(self):
-		while self.dishWaiting != []:
-			self.time = self.time + 1
+	"""First come, first serve steps:
+		
+		Iterate time.
+
+		1. Check all the dishes in dishWaiting. Check if there is an upcoming dish by matching the time of arrival with the current time.
+			a. If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state.
+			
+
+		2. PREPARATION
+			a. Check if preparation is empty
+			b. If not, iterate through the list, and subtract 1 in preparation timer. 
+				-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+					If there is, (transfer it to the ready state -if cooking yung next state)
+
+		3. COOKING
+
+			Check if the stove is occupied
+				a. -- Empty:
+					> Check if clean. 
+						- Check if there is a dish in the temporary list or check if the stove is not clean. 
+							If there is, we don't proceed to cooking
+							> Set Stove to be clean
+							> Remove the one in temporary list and assign in either prep or ready
+
+						- Check if there is a ready dish.
+							- If yes, check if the stove is warm.
+								- If yes, transfer the dish to the cooking.
+								- Change the state to occupied.
+
+
+							- If not, preheat the stove... go to printing
+
+						-> If not, proceed to printing....
+
+
+
+				b. -- Occupied:
+					Proceed. Subtract 1 time in the cook time of the current dish.
+					See if the current dish's cook time is zero. 
+						-> If it is zero, remove the respective instruction set.
+							And see if there is still a remaining instruction.
+							If there is still a remaining instruction put it in temporary list first.
+							Remove it from cooking. Change the value to unoccupied.
+
+							
+
+						-> If not just proceed with printing
+
+		-> Print Status
+		-> Check if stove is empty and 
+				 if ready is empty and
+				 if preparation is empty and
+				 if not switching [Context time switch] and
+				 if dishWaiting is empty
+
+				 -If all of these are satisfied, we now terminate.
+				 [ Print status outside na lang to tell na tapos na]
+	"""
+
+	def FCFS(self):						# First come, First serve
+		self.time = 0
+
+
+		"""
+		while self.dishWaiting != []:	# Here we have all this dish that haven't arrive yet.
+
+			self.time = self.time + 1 	#This is our time variable that iterates
+
+			self.dishWaiting.pop(0)
 			self.current.name = self.dishWaiting[0].name
+
 			self.current.time = self.dishWaiting[0].instructions[0][1]
+
 			self.remarks = str(self.current.name + " arrives")
+
 			self.dishWaiting.pop(0)
 
 			while self.current.time != 0:
 				self.current.time = int(self.current.time) - 1
-				self.printStatus()
+				self.printStatus()"""
 
 	def SJF(self):
 		pass
@@ -86,7 +207,6 @@ class Iron_Chef():
 	def __init__(self):
 		self.dishAtStove = ""		
 		self.dishWaiting = []
-		self.SchedulerInstance = Scheduler()
 
 	def readFile(self):
 	
@@ -155,7 +275,7 @@ class GUI:
 		
 	def show(self):
 		Up = Label(self.root, text="I R O N  C H E F", font=("Tahoma", 30, "bold"), bd=10, bg="DODGER BLUE", fg="LIGHTCYAN1")
-		Up.pack(side=TOP, fill=X, pady=(0,5))	
+		Up.pack(side=TOP, fill=X, pady=(0,5))
 
 		Down = Frame(self.root, width=600, height=50, bg="DODGER BLUE")
 		Down.pack(side=BOTTOM)
