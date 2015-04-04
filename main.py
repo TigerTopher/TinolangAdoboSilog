@@ -91,10 +91,6 @@ class Iron_Chef():
 			f.close()
 
 
-
-
-
-
 	def start(self):
 		self.readFile()
 
@@ -106,6 +102,11 @@ class Iron_Chef():
 			print "Instructions:"
 			print dish.showQueue()
 		"""
+
+
+
+
+		
 
 class GUI:
 	def __init__(self):
