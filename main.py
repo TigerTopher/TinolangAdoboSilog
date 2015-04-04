@@ -207,7 +207,7 @@ class Scheduler():
 						# If there is, put it in temporary list
 						self.temporary.append(self.ourStove.current[0])
 						# Remove it from cooking
-						self.ourStove.pop(0)
+						self.ourStove.remove()
 						# Change the value to unoccupied
 						self.ourStove.isOccupied = False
 				# If it is not zero
