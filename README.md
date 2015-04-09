@@ -63,6 +63,10 @@ FCFS Algorithm
 				 [ Print status outside na lang to tell na tapos na]
 	"""
 
+Arc 5
+---
++ Finished FCFS
++ Output to output.csv completed
 
 Arc 4
 ---
