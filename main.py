@@ -16,6 +16,9 @@ class Stove():
 		self.isCleanVar = True
 		self.isOccupiedVar = False
 
+	def getCurrentList(self):
+		return self.current
+
 	def decrTime(self):
 		self.current[0][2] = self.current[0][2] - 1
 
@@ -81,24 +84,32 @@ class Scheduler():
 
 		# self.numAssistants = -1 	# -1 Indicates unlimited assistants. Unlimited assistants mean that there is no limit in number of dishes in preparing state
 
-		self.remarks = ""
+		self.remarks = []
 
 	def printStatus(self):
-		print str(self.time) + "  | " + self.ourStove.getName() + " ," + str(self.ourStove.getTime() ) + " | " + str(self.ready) + " | " + str(self.preparing) + " | " + self.remarks
-		print "Temporary :", self.temporary 
+		#print "\n"
+		print str(self.time) + "  | " + str(self.ourStove.getCurrentList()) + " | " + str(self.ready) + " | " + str(self.preparing) + " | ",
+		for x in range(0, len(self.remarks)):
+			if x == 0:
+				print self.remarks[x],
+			else:
+				print ", " + self.remarks[x],
+		print "\n"
+		#print "\n"
+		#print "Temporary :", self.temporary 
 
 	def FCFS(self):								# First come, First serve
 		self.time = 0
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
-			
-			#Temporary for debugging
-			if(self.time % 50 == 0):
-				input()
+			self.remarks = []
+			#like a getch function
+			#if(self.time % 20 == 0):
+			#input()
 
 			self.time = self.time + 1
-	
-			# 1. Check all the dishes in dishWaiting.
+
+			# 1. Check all the dishes in dishWaiting. Check for arrival
 
 			for i in range(0, len(self.dishWaiting)):
 
@@ -116,12 +127,15 @@ class Scheduler():
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
 						# print self.time, temp
 
+
 						if(temp1[1] == "cook"):						#Go to ready state
 							self.ready.insert(0, temp1)
+							self.remarks.append(temp1[0]+" is added to ready state")
 
 						elif(temp1[1] == "prep"):
 							temp1[2] == temp1[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.insert(0, temp1)
+							self.remarks.append(temp1[0]+" is added to preparing")						
 						
 
 			
@@ -133,7 +147,6 @@ class Scheduler():
 
 				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
 				for x in range(0, len(self.preparing)):
-					print self.preparing[x][2]
 					self.preparing[x][2] = int(self.preparing[x][2]) - 1
 
 					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
@@ -144,67 +157,31 @@ class Scheduler():
 						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
 						# If there is, (transfer it to the ready state -if cooking yung next state)
 
-						print "Ang length ay: ", len(self.dishWaiting)
 						for y in range(0, len(self.dishWaiting)):
 							# This asks kung saan yun at kung may kasunod pa na instruction...
 
 							if( (self.dishWaiting[y].getName() == nameToMatch)):
-								print "macth"
 								if self.dishWaiting[y].showQueue() == []:
-									print "This will pop: ", self.dishWaiting[y].getName()
-									print y, len(self.dishWaiting)
+									self.remarks.append(self.dishWaiting[y].getName() +" finished.")
 									self.dishWaiting.pop(y)
-									print "na pop na"
-									print len(self.dishWaiting)
-									
+
 								else:
 									temp = self.dishWaiting[y].dequeue()
 									temp.insert(0, self.dishWaiting[y].getName())
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
-
+										self.remarks.append(temp[0]+" is added to preparation")
 								break
-			print "HELLO"
+
 			# COOKING
-			"""			Check if the stove is occupied
-				a. -- Empty:
-					> Check if clean. 
-						- Check if there is a dish in the temporary list or check if the stove is not clean. 
-							If there is, we don't proceed to cooking
-							> Set Stove to be clean
-							> Remove the one in temporary list and assign in either prep or ready
-
-						- Check if there is a ready dish.
-							- If yes, check if the stove is warm.
-								- If yes, transfer the dish to the cooking.
-								- Change the state to occupied.
-
-
-								- If not, preheat the stove... go to printing
-
-						-> If not, proceed to printing....
-
-
-
-				b. -- Occupied:
-					Proceed. Subtract 1 time in the cook time of the current dish.
-					See if the current dish's cook time is zero. 
-						-> If it is zero, remove the respective instruction set.
-							And see if there is still a remaining instruction.
-							If there is still a remaining instruction put it in temporary list first.
-							Remove it from cooking. Change the value to unoccupied.
-						-> If not just proceed with printing
-"""
 			# Check if the stove is occupied
 			if(self.ourStove.isOccupied() == False):
-				print "Stove is not Occupied."
-
-
 				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
-					print "Stove is not Clean"
 					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
 
 					if(self.temporary != []):
 						#get name then match in dish waiting
@@ -214,11 +191,10 @@ class Scheduler():
 						#Assign
 						for y in range(0, len(self.dishWaiting)):
 							if(self.dishWaiting[y].getName() == nameToMatch):
-
+								name = self.dishWaiting[y].getName()
 								if self.dishWaiting[y].showQueue() == []:
-									print "This will pop: ", self.dishWaiting[y].getName()
 									self.dishWaiting.pop(y)
-
+									self.remarks.append(name+" finished")
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
@@ -226,31 +202,29 @@ class Scheduler():
 
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to ready state")
 
 									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to cooking state")
 
 								break
 
 						
 				else:								#Kung clean siya
-					print "Stove is Clean"
 					if(self.ready != []):
-						print "Ready"
 						if(self.ourStove.isHot() == True):
-							print "It is Hot."
 							newToCook = self.ready.pop(0)
 							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
 						else:
-							print "It is not Hot yet"
 							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
 
 			else:							#Occupied
-				print "Stove is Occupied."
-
 				self.ourStove.decrTime()
-				print "Time: ", self.ourStove.getTime()
 				if ( self.ourStove.getTime() == 0):
+					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
 					#Check if there is still an instruction
 					nameToFind = returned[0]
@@ -259,16 +233,15 @@ class Scheduler():
 					for y in range(0, len(self.dishWaiting)):
 						if( self.dishWaiting[y].getName() == nameToFind):
 							if self.dishWaiting[y].showQueue() == []:
-								print "This will pop: ", self.dishWaiting[y].getName()
+								name = self.dishWaiting[y].getName()
 								self.dishWaiting.pop(y)
+								self.remarks.append(name +" finished")
 							else:
 								match = 1
 
 							break
 
-					print "MATCH: ", match
 					if(match == 1):
-						print "Putting this in temporary: ", returned
 						self.temporary.insert(0, returned )
 
 							

@@ -4,6 +4,7 @@
 ### Progress So Far: 
 *See Readme.md. "+ -> Topher", "- -> Cyan" *
 
+
 FCFS Algorithm
 ---
 	"""First come, first serve steps:
@@ -49,9 +50,6 @@ FCFS Algorithm
 							And see if there is still a remaining instruction.
 							If there is still a remaining instruction put it in temporary list first.
 							Remove it from cooking. Change the value to unoccupied.
-
-							
-
 						-> If not just proceed with printing
 
 		-> Print Status
