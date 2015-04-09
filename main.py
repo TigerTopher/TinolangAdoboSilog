@@ -98,8 +98,47 @@ class Scheduler():
 		#print "\n"
 		#print "Temporary :", self.temporary 
 
+	def printToFile(self, filePointer):
+		filePointer.write(str(self.time) + ",")
+
+		# Printing the Stove's Current
+		if (self.ourStove.current != []):
+			filePointer.write(self.ourStove.current[0][0] + "(" + self.ourStove.current[0][1] + "=" + str(self.ourStove.current[0][2]) + ")")
+		else:
+			filePointer.write("empty")
+		filePointer.write(" ,")
+
+		# Printing the Ready Queue
+		if (self.ready != []):
+			for x in self.ready:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ") ")
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Assistants Queue
+		if (self.preparing != []):
+			for x in self.preparing:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ") ")
+			
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Remarks
+		if (self.remarks != []):
+			for x in self.remarks:
+				filePointer.write(x + ". ")
+		else:
+			filePointer.write("---")
+
+		filePointer.write("\n")
+
 	def FCFS(self):								# First come, First serve
 		self.time = 0
+		# Open the file with append mode
+		f = open("output.csv", "w")
+		f.write("Time, Stove, Ready, Assistants, Remarks\n")
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -244,11 +283,16 @@ class Scheduler():
 					if(match == 1):
 						self.temporary.insert(0, returned )
 
-							
-
 
 			# PRINTING IS HERE
 			self.printStatus()
+
+			# Print to file
+			self.printToFile(f)
+
+		print("Successfully Saved To output.csv!")	
+		# Close the file	
+		f.close()
 						
 
 	def SJF(self):
