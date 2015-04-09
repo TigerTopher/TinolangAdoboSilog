@@ -66,7 +66,7 @@ class Stove():
 		self.isHotVar = True
 
 	def clean(self):
-		self.isCleanvar = True
+		self.isCleanVar = True
 
 class Scheduler():
 	def __init__(self, dishWaiting):
@@ -85,12 +85,17 @@ class Scheduler():
 
 	def printStatus(self):
 		print str(self.time) + " ," + self.ourStove.getName() + " ," + str(self.ourStove.getTime() ) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
-
+		print "Temporary :", self.temporary 
 
 	def FCFS(self):								# First come, First serve
 		self.time = 0
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
+			
+			#Temporary for debugging
+			if(self.time == 65):
+				break
+
 			self.time = self.time + 1
 	
 			# 1. Check all the dishes in dishWaiting.
@@ -141,17 +146,17 @@ class Scheduler():
 
 						for y in range(0, len(self.dishWaiting)):
 							# This asks kung saan yun at kung may kasunod pa na instruction...
-							if( (self.dishWaiting[y].getName() == nameToMatch)):
+							if( (self.dishWaiting[y].getName() == nameToMatch)):	
 								if self.dishWaiting[y].showQueue() == []:
 									self.dishWaiting.pop(y)
 								else:
 									temp = self.dishWaiting[y].dequeue()
 									temp.insert(0, self.dishWaiting[y].getName())
-
-									if(temp[1][0] == "cook"):						#Go to ready state
+									print "TEMPOOOOO: ", temp, "\n\n"
+									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
 
-									elif(temp[1][0] == "prep"):
+									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 
 
@@ -187,41 +192,63 @@ class Scheduler():
 """
 			# Check if the stove is occupied
 			if(self.ourStove.isOccupied() == False):
+				print "Stove is not Occupied."
+
 
 				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
+					print "Stove is not Clean"
 					self.ourStove.clean()
+
 					if(self.temporary != []):
+						print "May gagawin tayo sa temporary: "
+
 						#get name then match in dish waiting
-						nameToMatch = self.temporary[0]
+						nameToMatch = self.temporary[0][0]
 						self.temporary.pop(0)
+						print "Ang name ay: ", nameToMatch
 
 						#Assign
 						for y in range(0, len(self.dishWaiting)):
 							if(self.dishWaiting[y].getName() == nameToMatch):
+
 								if self.dishWaiting[y].showQueue() == []:
 									self.dishWaiting.pop(y)
+
 								else:
+									print "ilalagay nanatin\n\n"
 									temp = self.dishWaiting[y].dequeue()
+									print temp
 									temp.insert(0, self.dishWaiting[y].getName())
-									
-									if(temp[1][0] == "cook"):						#Go to ready state
+									print temp
+
+									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
 
-									elif(temp[1][0] == "prep"):
+									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)
 
+
 						
-				else:
+				else:								#Kung clean siya
+					print "Stove is Clean"
 					if(self.ready != []):
+						print "Ready"
 						if(self.ourStove.isHot() == True):
+							print "It is Hot."
 							newToCook = self.ready.pop(0)
 							self.ourStove.cook(newToCook)		#This already sets it to occupied
 						else:
 							self.ourStove.preheat()
 
 			else:							#Occupied
+				print "Stove is Occupied."
+
 				self.ourStove.decrTime()
+				print "Time: ", self.ourStove.getTime()
+
 				if ( self.ourStove.getTime() == 0):
+					print "Moving to tempo"
+
 					returned = self.ourStove.remove()
 					#Check if there is still an instruction
 					nameToFind = returned[0]
@@ -236,7 +263,9 @@ class Scheduler():
 
 							break
 
+					print "MATCH: ", match
 					if(match == 1):
+						print "Putting this in temporary: ", returned
 						self.temporary.insert(0, returned )
 
 							
