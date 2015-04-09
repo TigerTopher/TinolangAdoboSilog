@@ -84,7 +84,7 @@ class Scheduler():
 		self.remarks = ""
 
 	def printStatus(self):
-		print str(self.time) + " ," + self.ourStove.getName() + " ," + str(self.ourStove.getTime() ) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
+		print str(self.time) + "  | " + self.ourStove.getName() + " ," + str(self.ourStove.getTime() ) + " | " + str(self.ready) + " | " + str(self.preparing) + " | " + self.remarks
 		print "Temporary :", self.temporary 
 
 	def FCFS(self):								# First come, First serve
@@ -93,8 +93,8 @@ class Scheduler():
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			
 			#Temporary for debugging
-			if(self.time == 65):
-				break
+			if(self.time % 50 == 0):
+				input()
 
 			self.time = self.time + 1
 	
@@ -144,22 +144,29 @@ class Scheduler():
 						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
 						# If there is, (transfer it to the ready state -if cooking yung next state)
 
+						print "Ang length ay: ", len(self.dishWaiting)
 						for y in range(0, len(self.dishWaiting)):
 							# This asks kung saan yun at kung may kasunod pa na instruction...
-							if( (self.dishWaiting[y].getName() == nameToMatch)):	
+
+							if( (self.dishWaiting[y].getName() == nameToMatch)):
+								print "macth"
 								if self.dishWaiting[y].showQueue() == []:
+									print "This will pop: ", self.dishWaiting[y].getName()
+									print y, len(self.dishWaiting)
 									self.dishWaiting.pop(y)
+									print "na pop na"
+									print len(self.dishWaiting)
+									
 								else:
 									temp = self.dishWaiting[y].dequeue()
 									temp.insert(0, self.dishWaiting[y].getName())
-									print "TEMPOOOOO: ", temp, "\n\n"
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
-
 									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 
-
+								break
+			print "HELLO"
 			# COOKING
 			"""			Check if the stove is occupied
 				a. -- Empty:
@@ -200,26 +207,22 @@ class Scheduler():
 					self.ourStove.clean()
 
 					if(self.temporary != []):
-						print "May gagawin tayo sa temporary: "
-
 						#get name then match in dish waiting
 						nameToMatch = self.temporary[0][0]
 						self.temporary.pop(0)
-						print "Ang name ay: ", nameToMatch
 
 						#Assign
 						for y in range(0, len(self.dishWaiting)):
 							if(self.dishWaiting[y].getName() == nameToMatch):
 
 								if self.dishWaiting[y].showQueue() == []:
+									print "This will pop: ", self.dishWaiting[y].getName()
 									self.dishWaiting.pop(y)
 
+
 								else:
-									print "ilalagay nanatin\n\n"
 									temp = self.dishWaiting[y].dequeue()
-									print temp
 									temp.insert(0, self.dishWaiting[y].getName())
-									print temp
 
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.insert(0, temp)
@@ -227,6 +230,7 @@ class Scheduler():
 									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)
 
+								break
 
 						
 				else:								#Kung clean siya
@@ -238,6 +242,7 @@ class Scheduler():
 							newToCook = self.ready.pop(0)
 							self.ourStove.cook(newToCook)		#This already sets it to occupied
 						else:
+							print "It is not Hot yet"
 							self.ourStove.preheat()
 
 			else:							#Occupied
@@ -245,10 +250,7 @@ class Scheduler():
 
 				self.ourStove.decrTime()
 				print "Time: ", self.ourStove.getTime()
-
 				if ( self.ourStove.getTime() == 0):
-					print "Moving to tempo"
-
 					returned = self.ourStove.remove()
 					#Check if there is still an instruction
 					nameToFind = returned[0]
@@ -257,6 +259,7 @@ class Scheduler():
 					for y in range(0, len(self.dishWaiting)):
 						if( self.dishWaiting[y].getName() == nameToFind):
 							if self.dishWaiting[y].showQueue() == []:
+								print "This will pop: ", self.dishWaiting[y].getName()
 								self.dishWaiting.pop(y)
 							else:
 								match = 1
