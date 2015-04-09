@@ -16,8 +16,23 @@ class Stove():
 		self.isCleanVar = True
 		self.isOccupiedVar = False
 
+	def decrTime(self):
+		self.current[0][2] = self.current[0][2] - 1
+
+	def getTime(self):
+		if(self.current!= []):
+			return self.current[0][2]
+		else:
+			return ""
+
+	def getName(self):
+		if(self.current != []):
+			return self.current[0][0]
+		else:
+			return ""
+
 	def cook(self, newDish):
-		if (self.isHotVar == True) and (self.isCleanVar == True) and (isOccupiedVar == False):
+		if (self.isHotVar == True) and (self.isCleanVar == True) and (self.isOccupiedVar == False):
 			
 			self.current.append(newDish)
 			self.isOccupiedVar = True
@@ -28,7 +43,7 @@ class Stove():
 			return False
 
 	def remove(self):
-		if(isOccupiedVar == False):		# Nothing was removed
+		if(self.isOccupiedVar == False):		# Nothing was removed
 			return False
 
 		# If indeed there is...
@@ -62,7 +77,6 @@ class Scheduler():
 		self.ourStove = Stove()
 		self.ready = []				# This are the ones waiting for the stove
 		self.preparing = []			# This are the ones in preparing state
-		self.switching = False
 		self.temporary = []
 
 		# self.numAssistants = -1 	# -1 Indicates unlimited assistants. Unlimited assistants mean that there is no limit in number of dishes in preparing state
@@ -70,14 +84,13 @@ class Scheduler():
 		self.remarks = ""
 
 	def printStatus(self):
-		print str(self.time) + " ," + self.current.name + " ," + str(self.current.time) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
+		print str(self.time) + " ," + self.ourStove.getName() + " ," + str(self.ourStove.getTime() ) + " ," + str(self.ready) + " ," + str(self.preparing) + " ," + self.remarks
 
 
 	def FCFS(self):								# First come, First serve
 		self.time = 0
 
-
-		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.switching == True) or (self.dishWaiting != [])):
+		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.time = self.time + 1
 	
 			# 1. Check all the dishes in dishWaiting.
@@ -128,98 +141,109 @@ class Scheduler():
 
 						for y in range(0, len(self.dishWaiting)):
 							# This asks kung saan yun at kung may kasunod pa na instruction...
-							if( (self.dishWaiting[y].getName() == nameToMatch) and (self.dishWaiting[y].showQueue != [] )):
-								temp = self.dishWaiting[y].dequeue()
-								temp.insert(0, self.dishWaiting[y].getName())
+							if( (self.dishWaiting[y].getName() == nameToMatch)):
+								if self.dishWaiting[y].showQueue() == []:
+									self.dishWaiting.pop(y)
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
 
-								if(temp[1][0] == "cook"):						#Go to ready state
-									self.ready.insert(0, temp)
+									if(temp[1][0] == "cook"):						#Go to ready state
+										self.ready.insert(0, temp)
 
-								elif(temp[1][0] == "prep"):
-									self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
+									elif(temp[1][0] == "prep"):
+										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 
 
 			# COOKING
-			
+			"""			Check if the stove is occupied
+				a. -- Empty:
+					> Check if clean. 
+						- Check if there is a dish in the temporary list or check if the stove is not clean. 
+							If there is, we don't proceed to cooking
+							> Set Stove to be clean
+							> Remove the one in temporary list and assign in either prep or ready
+
+						- Check if there is a ready dish.
+							- If yes, check if the stove is warm.
+								- If yes, transfer the dish to the cooking.
+								- Change the state to occupied.
+
+
+								- If not, preheat the stove... go to printing
+
+						-> If not, proceed to printing....
+
+
+
+				b. -- Occupied:
+					Proceed. Subtract 1 time in the cook time of the current dish.
+					See if the current dish's cook time is zero. 
+						-> If it is zero, remove the respective instruction set.
+							And see if there is still a remaining instruction.
+							If there is still a remaining instruction put it in temporary list first.
+							Remove it from cooking. Change the value to unoccupied.
+						-> If not just proceed with printing
+"""
 			# Check if the stove is occupied
-			
-			#a. Empty
-			if self.ourStove.isOccupied == False:
+			if(self.ourStove.isOccupied() == False):
 
-				# Check if the stove is clean
-				if self.ourStove.isClean == False:
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
+					self.ourStove.clean()
+					if(self.temporary != []):
+						#get name then match in dish waiting
+						nameToMatch = self.temporary[0]
+						self.temporary.pop(0)
 
-					# If not, set the stove to clean
-					self.ourStove.isClean = True
+						#Assign
+						for y in range(0, len(self.dishWaiting)):
+							if(self.dishWaiting[y].getName() == nameToMatch):
+								if self.dishWaiting[y].showQueue() == []:
+									self.dishWaiting.pop(y)
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
+									
+									if(temp[1][0] == "cook"):						#Go to ready state
+										self.ready.insert(0, temp)
 
-				# Check if there is a dish in the temp list or check if the stove is not clean
-				if self.temporary != []:
+									elif(temp[1][0] == "prep"):
+										self.preparing.insert(0, temp)
 
-						# If there is, remove the one in temp list and assign to ready/prep queue
-						for y in range(0, len(self.temporary)):
-							# This asks kung saan yun at kung may kasunod pa na instruction...
-							if( (self.temporary[y].getName() == nameToMatch) and (self.dishWaiting[y].showQueue != [] )):
-								temp = self.temporary[y].dequeue()
-								temp.insert(0, self.temporary[y].getName())
-
-								if(temp[1][0] == "cook"):						#Go to ready state
-									self.ready.insert(0, temp)
-
-								elif(temp[1][0] == "prep"):
-									self.preparing.insert(0, temp)	
-
-				# If there are no more dish in the temp list, print
+						
 				else:
-					self.printStatus()
+					if(self.ready != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+						else:
+							self.ourStove.preheat()
 
-				# Check if there is a ready dish
-				if self.ready != []:
+			else:							#Occupied
+				self.ourStove.decrTime()
+				if ( self.ourStove.getTime() == 0):
+					returned = self.ourStove.remove()
+					#Check if there is still an instruction
+					nameToFind = returned[0]
+					match = 0
 
-					# If there is a ready dish, check if stove is warm
-					if self.ourStove.isHot == True:
+					for y in range(0, len(self.dishWaiting)):
+						if( self.dishWaiting[y].getName() == nameToFind):
+							if self.dishWaiting[y].showQueue() == []:
+								self.dishWaiting.pop(y)
+							else:
+								match = 1
 
-						# If stove is hot, transfer dish to cook and change state to occupied
-						self.ourStove.cook(self.ready[0])	# Not sure kung tama ito? Tranfer to cook
-						self.ready.pop(0)					# So remove from ready list...
-						self.ourStove.isOccupied = True
+							break
 
-					# If there is none in the ready list
-					else:
-						# Preheat the stove, then print?
-						self.ourStove.isHot = True
-						self.printStatus()
+					if(match == 1):
+						self.temporary.insert(0, returned )
+
+							
 
 
-			#b. Occupied
-			elif self.ourStove.isOccupied == True:
-				# Subtract 1 time in cook time of the current dish
-				# Di ko sure saan ko kukunin ung cook time so dun na lng sa instruction set, or...
-				# I think I missed something heheh
-				self.ourStove.current[0].instructions[0][1] = int(self.ourStove.current[0].instructions[0][1]) - 1
-				
-				# Check if the cook time is 0
-				if self.ourStove.current[0].instructions[0][1] == 0:
-					# If it is 0, remove the instruction set
-					self.ourStove.current[0].instructions.pop(0)
-
-					# Check if there are still remaining instruction
-					if self.ourStove.current[0].instructions != []:
-						# If there is, put it in temporary list
-						self.temporary.append(self.ourStove.current[0])
-						# Remove it from cooking
-						self.ourStove.remove()
-						# Change the value to unoccupied
-						self.ourStove.isOccupied = False
-				# If it is not zero
-				else:
-					# Proceed with printing
-					self.printStatus()
-
-			# If the instruction is empty, we remove it in dishWaiting...
-			for x in range(0, len(self.dishWaiting)):
-				if(self.dishWaiting[x].showQueue == []):
-					self.dishWaiting.pop(x)
-
+			# PRINTING IS HERE
+			self.printStatus()
 						
 
 	def SJF(self):
