@@ -396,55 +396,39 @@ class Scheduler():
 
 			# COOKING
 			# Check if the stove is occupied
-			if(self.ourStove.isOccupied() == False):
-				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
-					self.ourStove.clean()
-					self.remarks.append("Cleaning stove")
+			if(self.temporary != []):
+				#Assign
+				print "\nTIMER IN TEMP: " + str(self.temporary[0][2]) + "\n"
+				if (self.temporary[0][2] != 0):
+					self.ready.append(self.temporary[0])
+					self.temporary.remove(self.temporary[0])	
+				else:
+					#get name then match in dish waiting
+					nameToMatch = self.temporary[0][0]
+					self.temporary.pop(0)
 
-					if(self.temporary != []):
-						#Assign
-						print "\nTIMER IN TEMP: " + str(self.temporary[0][2]) + "\n"
-						if (self.temporary[0][2] != 0):
-							self.ready.append(self.temporary[0])
-							self.temporary.remove(self.temporary[0])	
-						else:
-							#get name then match in dish waiting
-							nameToMatch = self.temporary[0][0]
-							self.temporary.pop(0)
+					for y in range(0, len(self.dishWaiting)):
+						if(self.dishWaiting[y].getName() == nameToMatch):
+							name = self.dishWaiting[y].getName()
+							if self.dishWaiting[y].showQueue() == []:
+								self.dishWaiting.pop(y)
+								self.remarks.append(name+" finished")
 
-							for y in range(0, len(self.dishWaiting)):
-								if(self.dishWaiting[y].getName() == nameToMatch):
-									name = self.dishWaiting[y].getName()
-									if self.dishWaiting[y].showQueue() == []:
-										self.dishWaiting.pop(y)
-										self.remarks.append(name+" finished")
+							else:
+								temp = self.dishWaiting[y].dequeue()
+								temp.insert(0, self.dishWaiting[y].getName())
 
-									else:
-										temp = self.dishWaiting[y].dequeue()
-										temp.insert(0, self.dishWaiting[y].getName())
+								if(temp[1] == "cook"):						#Go to ready state
+									self.ready.append(temp)
+									self.remarks.append(temp[0]+" is added to ready state")
 
-										if(temp[1] == "cook"):						#Go to ready state
-											self.ready.append(temp)
-											self.remarks.append(temp[0]+" is added to ready state")
+								elif(temp[1] == "prep"):
+									self.preparing.append(temp)
+									self.remarks.append(temp[0]+" is added to cooking state")
 
-										elif(temp[1] == "prep"):
-											self.preparing.append(temp)
-											self.remarks.append(temp[0]+" is added to cooking state")
+							break
 
-									break
-
-						
-				else:								#Kung clean siya
-					if(self.ready != []):
-						if(self.ourStove.isHot() == True):
-							newToCook = self.ready.pop(0)
-							self.ourStove.cook(newToCook)		#This already sets it to occupied
-							self.remarks.append("Started Cooking " + newToCook[0])
-						else:
-							self.ourStove.preheat()
-							self.remarks.append("Preheating stove")
-
-			else:							#Occupied
+			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
 				self.ourStove.TQ = self.ourStove.TQ + 1
 
@@ -481,6 +465,24 @@ class Scheduler():
 						self.remarks.append(self.ourStove.getName() + " pre-empted.")
 						toTemp = self.ourStove.remove()
 						self.temporary.append(toTemp)
+
+
+			if(self.ourStove.isOccupied() == False):
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
+					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
+
+				else:								#Kung clean siya
+					if(self.ready != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+
 
 			# PRINTING IS HERE
 			self.printStatus()
@@ -585,9 +587,9 @@ class Iron_Chef():
 		b = Scheduler(list(dupli))
 		b.FCFS()
 
-		#dupli = copy.deepcopy(self.dishWaiting)
-		#c = Scheduler(list(dupli))
-		#c.RoundRobin()
+		dupli = copy.deepcopy(self.dishWaiting)
+		c = Scheduler(list(dupli))
+		c.RoundRobin()
 
 
 
