@@ -161,20 +161,20 @@ class Scheduler():
 
 						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
 
-						temp1 = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
-						temp1.insert(0, self.dishWaiting[i].getName())	#Added the name
+						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
 						# print self.time, temp
 
 
-						if(temp1[1] == "cook"):						#Go to ready state
-							self.ready.insert(0, temp1)
-							self.remarks.append(temp1[0]+" is added to ready state")
+						if(temp[1] == "cook"):						#Go to ready state
+							self.ready.insert(0, temp)
+							self.remarks.append(temp[0]+" is added to ready state")
 
-						elif(temp1[1] == "prep"):
-							temp1[2] == temp1[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
-							self.preparing.insert(0, temp1)
-							self.remarks.append(temp1[0]+" is added to preparing")						
+						elif(temp[1] == "prep"):
+							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.insert(0, temp)
+							self.remarks.append(temp[0]+" is added to preparing")						
 						
 
 			
