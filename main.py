@@ -8,6 +8,7 @@
 from Tkinter import * 		# For python version 2.7 only.
 from tkFileDialog import * 	# For built-in Tkinter file dialogs.
 import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
+import copy					# For copy.deepcopy function - makes self.dishWaiting list uneditable by functions
 
 class Stove():
 	def __init__(self):
@@ -302,7 +303,128 @@ class Scheduler():
 		pass
 
 	def RoundRobin(self):
-		pass
+		self.time = 0
+
+		f = open("output.csv", "w")
+		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
+			self.remarks = []
+			self.time = self.time + 1
+
+			for i in range(0, len(self.dishWaiting)):
+				if (self.dishWaiting[i].getTime() == self.time) :
+					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+
+						if(temp[1] == "cook"):						#Go to ready state
+							self.ready.insert(0, temp)
+							self.remarks.append(temp[0]+" is added to ready state")
+
+						elif(temp[1] == "prep"):
+							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.insert(0, temp)
+							self.remarks.append(temp[0]+" is added to preparing")						
+
+			if(self.preparing != []):
+				for x in range(0, len(self.preparing)):
+					self.preparing[x][2] = int(self.preparing[x][2]) - 1
+
+					if self.preparing[x][2] == 0:
+						nameToMatch = (self.preparing.pop(x))[0]
+						
+						for y in range(0, len(self.dishWaiting)):
+
+							if( (self.dishWaiting[y].getName() == nameToMatch)):
+								if self.dishWaiting[y].showQueue() == []:
+									self.remarks.append(self.dishWaiting[y].getName() +" finished.")
+									self.dishWaiting.pop(y)
+
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
+									if(temp[1] == "cook"):						#Go to ready state
+										self.ready.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to ready state")
+									elif(temp[1] == "prep"):
+										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
+										self.remarks.append(temp[0]+" is added to preparation")
+								break
+
+			if(self.ourStove.isOccupied() == False):
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
+					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
+
+					if(self.temporary != []):
+						nameToMatch = self.temporary[0][0]
+						self.temporary.pop(0)
+
+						for y in range(0, len(self.dishWaiting)):
+							if(self.dishWaiting[y].getName() == nameToMatch):
+								name = self.dishWaiting[y].getName()
+								if self.dishWaiting[y].showQueue() == []:
+									self.dishWaiting.pop(y)
+									self.remarks.append(name+" finished")
+
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
+
+									if(temp[1] == "cook"):						#Go to ready state
+										self.ready.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to ready state")
+
+									elif(temp[1] == "prep"):
+										self.preparing.insert(0, temp)
+										self.remarks.append(temp[0]+" is added to cooking state")
+
+								break
+		
+				else:								#Kung clean siya
+					if(self.ready != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+			else:							#Occupied
+				self.ourStove.decrTime()
+				if ( self.ourStove.getTime() == 0):
+					self.remarks.append(self.ourStove.getName() + " cooking ended")
+					returned = self.ourStove.remove()
+					#Check if there is still an instruction
+					nameToFind = returned[0]
+					match = 0
+
+					for y in range(0, len(self.dishWaiting)):
+						if( self.dishWaiting[y].getName() == nameToFind):
+							if self.dishWaiting[y].showQueue() == []:
+								name = self.dishWaiting[y].getName()
+								self.dishWaiting.pop(y)
+								self.remarks.append(name +" finished")
+							else:
+								match = 1
+
+							break
+
+					if(match == 1):
+						self.temporary.insert(0, returned )
+
+
+			# PRINTING IS HERE
+			self.printStatus()
+
+			# Print to file
+			self.printToFile(f)
+
+		print("Successfully Saved To output.csv!")	
+		# Close the file	
+		f.close()
 
 	def MultiQueue(self):
 		pass
@@ -392,10 +514,17 @@ class Iron_Chef():
 			f.close()
 
 	def start(self):
-
 		self.readFile()
-		b = Scheduler(self.dishWaiting)
+
+		dupli = copy.deepcopy(self.dishWaiting)
+		b = Scheduler(list(dupli))
 		b.FCFS()
+
+		dupli = copy.deepcopy(self.dishWaiting)
+		c = Scheduler(list(dupli))
+		c.RoundRobin()
+
+
 
 		"""TEST PRINTING IF DISH WORKED
 		for dish in self.dishWaiting:
