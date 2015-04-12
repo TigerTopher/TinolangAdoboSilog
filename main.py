@@ -354,14 +354,16 @@ class Scheduler():
 			if(self.preparing != []):
 
 				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
-				for x in range(0, len(self.preparing)):
+				
+				x = 0
+				
+				while(x < len(self.preparing)):
 					self.preparing[x][2] = int(self.preparing[x][2]) - 1
-
 					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
-					
+
 					if self.preparing[x][2] == 0:
 						nameToMatch = (self.preparing.pop(x))[0]
-						
+
 						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
 						# If there is, (transfer it to the ready state -if cooking yung next state)
 
@@ -382,7 +384,12 @@ class Scheduler():
 									elif(temp[1] == "prep"):
 										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
+						
 								break
+						
+						x = x - 1
+					x = x + 1
+
 
 			# COOKING
 			# Check if the stove is occupied
