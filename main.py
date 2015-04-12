@@ -210,7 +210,7 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.append( self.dishWaiting[y].getName())
+									temp.insert(0, self.dishWaiting[y].getName())
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
@@ -243,7 +243,7 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.append(self.dishWaiting[y].getName())
+									temp.insert(0,self.dishWaiting[y].getName())
 
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.append(temp)
@@ -332,7 +332,7 @@ class Scheduler():
 						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
 
 						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
-						temp.append(self.dishWaiting[i].getName())	#Added the name
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
 						# print self.time, temp
 
@@ -378,7 +378,7 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.append(self.dishWaiting[y].getName())
+									temp.insert(0, self.dishWaiting[y].getName())
 									if(temp[1] == "cook"):						#Go to ready state
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
@@ -419,7 +419,7 @@ class Scheduler():
 
 									else:
 										temp = self.dishWaiting[y].dequeue()
-										temp.append(self.dishWaiting[y].getName())
+										temp.insert(0, self.dishWaiting[y].getName())
 
 										if(temp[1] == "cook"):						#Go to ready state
 											self.ready.append(temp)
