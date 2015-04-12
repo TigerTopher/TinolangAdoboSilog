@@ -3,6 +3,13 @@
 
 ### Progress So Far: 
 
+Arc 7
+---
++ Finished GeneralizedRR
++ With GUI na!
++ Clicking a button (scheduler) opens the output.csv file =))
++ SJF, Prio, and Multi to go! 
+
 Arc 6
 ---
 + Finished RRTQ=3
