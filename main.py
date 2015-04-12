@@ -186,8 +186,10 @@ class Scheduler():
 
 			if(self.preparing != []):
 
-				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
-				for x in range(0, len(self.preparing)):
+				#b. If not, iterate through the list, and subtract 1 in preparation timer.
+				x = 0
+
+				while( x < len(self.preparing)):
 					self.preparing[x][2] = int(self.preparing[x][2]) - 1
 
 					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
@@ -216,6 +218,8 @@ class Scheduler():
 										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
+						x = x - 1
+					x = x + 1
 
 			# COOKING
 			# Check if the stove is occupied
@@ -356,7 +360,7 @@ class Scheduler():
 				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
 				
 				x = 0
-				
+
 				while(x < len(self.preparing)):
 					self.preparing[x][2] = int(self.preparing[x][2]) - 1
 					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
