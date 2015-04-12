@@ -473,11 +473,13 @@ class Scheduler():
 					# Checks if TQ is reached. If it is, reset TQ = 0
 					self.ourStove.TQ = 0
 
+					# We are not sure automatically if we are going to pre-empt. Let's check ready first.
+					if(self.ready != []):
 					# Preempt the current dish, put to temp queue
-					self.remarks.append(self.ourStove.getName() + " pre-empted.")
-					toTemp = self.ourStove.remove()
-					self.temporary.append(toTemp)
-
+						self.remarks.append(self.ourStove.getName() + " pre-empted.")
+						toTemp = self.ourStove.remove()
+						self.temporary.append(toTemp)
+					
 			# PRINTING IS HERE
 			self.printStatus()
 
