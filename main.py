@@ -5,10 +5,9 @@
 # Christopher Vizcarra 2013-58235
 # Cyan Villarin 2013-10940
 
-from Tkinter import * 		# For python version 2.7 only.
-from tkFileDialog import * 	# For built-in Tkinter file dialogs.
-import ScrolledText 		# For scrolledText widget used in messaging, statuses and deletion.
+from Tkinter import * 		# For python version 2.7 only. Built-in GUI Module.
 import copy					# For copy.deepcopy function - makes self.dishWaiting list uneditable by functions
+import os 					# For os.system()
 
 class Stove():
 	def __init__(self):
@@ -48,10 +47,9 @@ class Stove():
 			return False
 
 	def remove(self):
-		if(self.isOccupiedVar == False):		# Nothing was removed
+		if(self.isOccupiedVar == False):		
 			return False
 
-		# If indeed there is...
 		self.isOccupiedVar = False
 		self.isHotVar = False
 		self.isCleanVar = False
@@ -77,19 +75,14 @@ class Scheduler():
 	def __init__(self, dishWaiting):
 		self.dishWaiting = dishWaiting
 		self.time = 0
-
-		#self.current = Dish()		# This is the current dish that is
 		self.ourStove = Stove()
-		self.ready = []				# This are the ones waiting for the stove
-		self.preparing = []			# This are the ones in preparing state
+		self.ready = []				
+		self.preparing = []			
 		self.temporary = []
-
-		# self.numAssistants = -1 	# -1 Indicates unlimited assistants. Unlimited assistants mean that there is no limit in number of dishes in preparing state
-
 		self.remarks = []
 
 	def printStatus(self):
-		#print "\n"
+
 		print str(self.time) + "  | " + str(self.ourStove.getCurrentList()) + " | " + str(self.ready) + " | " + str(self.preparing) + " | ",
 		for x in range(0, len(self.remarks)):
 			if x == 0:
@@ -97,8 +90,6 @@ class Scheduler():
 			else:
 				print ", " + self.remarks[x],
 		print "\n"
-		#print "\n"
-		#print "Temporary :", self.temporary 
 
 	def printToFile(self, filePointer):
 		filePointer.write(str(self.time) + ",")
@@ -136,7 +127,7 @@ class Scheduler():
 
 		filePointer.write("\n")
 
-	def FCFS(self):								# First come, First serve
+	def FCFS(self):						# First come, First serve
 		self.time = 0
 		# Open the file with append mode
 		f = open("output.csv", "w")
@@ -144,10 +135,6 @@ class Scheduler():
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
-			#like a getch function
-			#if(self.time % 20 == 0):
-			#input()
-
 			self.time = self.time + 1
 
 			# 1. Check all the dishes in dishWaiting. Check for arrival
@@ -165,9 +152,7 @@ class Scheduler():
 
 						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
 						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
-						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
-						# print self.time, temp
-
+						# The last five lines were just for formatting. Temp contains the dish name, instruction, and time count
 
 						if(temp[1] == "cook"):						#Go to ready state
 							self.ready.append(temp)
@@ -289,27 +274,16 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
-
-
-
 			# PRINTING IS HERE
-			self.printStatus()
+			# self.printStatus()
 
 			# Print to file
 			self.printToFile(f)
 
-		print("Successfully Saved To output.csv!")	
 		# Close the file	
 		f.close()
-						
 
-	def SJF(self):
-		pass
-
-	def Priority(self):
-		pass
-
-	def RoundRobin(self):		 #RoundRobin TQ=3
+	def RRTQ3(self):					# RoundRobin TQ = 3
 		self.time = 0
 		# Open the file with append mode
 		f = open("output.csv", "w")
@@ -336,8 +310,6 @@ class Scheduler():
 						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
 						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
-						# print self.time, temp
-
 
 						if(temp[1] == "cook"):						#Go to ready state
 							self.ready.append(temp)
@@ -398,7 +370,6 @@ class Scheduler():
 			# Check if the stove is occupied
 			if(self.temporary != []):
 				#Assign
-				print "\nTIMER IN TEMP: " + str(self.temporary[0][2]) + "\n"
 				if (self.temporary[0][2] != 0):
 					self.ready.append(self.temporary[0])
 					self.temporary.remove(self.temporary[0])	
@@ -485,18 +456,202 @@ class Scheduler():
 
 
 			# PRINTING IS HERE
-			self.printStatus()
+			# self.printStatus()
 
 			# Print to file
 			self.printToFile(f)
 
-		print("Successfully Saved To output.csv!")	
 		# Close the file	
 		f.close()
-	def MultiQueue(self):
+	
+	def GenRR(self, TQ):				# Generalized Round Robin
+		self.time = 0
+		# Open the file with append mode
+		f = open("output.csv", "w")
+		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
+			self.remarks = []
+
+			self.time = self.time + 1
+
+			# 1. Check all the dishes in dishWaiting. Check for arrival
+
+			for i in range(0, len(self.dishWaiting)):
+
+				# Check if there is an upcoming dish by matching the time of arrival with the current time.
+
+				if (self.dishWaiting[i].getTime() == self.time) :
+					
+					#If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state. (SEE INSTRUCTION)
+					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+
+						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
+
+						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
+
+						if(temp[1] == "cook"):						#Go to ready state
+							self.ready.append(temp)
+							self.remarks.append(temp[0]+" is added to ready state")
+
+						elif(temp[1] == "prep"):
+							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.append(temp)
+							self.remarks.append(temp[0]+" is added to preparing")						
+						
+
+			
+			#2. PREPARATION
+
+			#a. Check if preparation is not empty
+
+			if(self.preparing != []):
+
+				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
+				
+				x = 0
+
+				while(x < len(self.preparing)):
+					self.preparing[x][2] = int(self.preparing[x][2]) - 1
+					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+
+					if self.preparing[x][2] == 0:
+						nameToMatch = (self.preparing.pop(x))[0]
+
+						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
+						# If there is, (transfer it to the ready state -if cooking yung next state)
+
+						for y in range(0, len(self.dishWaiting)):
+							# This asks kung saan yun at kung may kasunod pa na instruction...
+
+							if( (self.dishWaiting[y].getName() == nameToMatch)):
+								if self.dishWaiting[y].showQueue() == []:
+									self.remarks.append(self.dishWaiting[y].getName() +" finished.")
+									self.dishWaiting.pop(y)
+
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
+									if(temp[1] == "cook"):						#Go to ready state
+										self.ready.append(temp)
+										self.remarks.append(temp[0]+" is added to ready state")
+									elif(temp[1] == "prep"):
+										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
+										self.remarks.append(temp[0]+" is added to preparation")
+						
+								break
+						
+						x = x - 1
+					x = x + 1
+
+
+			# COOKING
+			# Check if the stove is occupied
+			if(self.temporary != []):
+				#Assign
+				if (self.temporary[0][2] != 0):
+					self.ready.append(self.temporary[0])
+					self.temporary.remove(self.temporary[0])	
+				else:
+					#get name then match in dish waiting
+					nameToMatch = self.temporary[0][0]
+					self.temporary.pop(0)
+
+					for y in range(0, len(self.dishWaiting)):
+						if(self.dishWaiting[y].getName() == nameToMatch):
+							name = self.dishWaiting[y].getName()
+							if self.dishWaiting[y].showQueue() == []:
+								self.dishWaiting.pop(y)
+								self.remarks.append(name+" finished")
+
+							else:
+								temp = self.dishWaiting[y].dequeue()
+								temp.insert(0, self.dishWaiting[y].getName())
+
+								if(temp[1] == "cook"):						#Go to ready state
+									self.ready.append(temp)
+									self.remarks.append(temp[0]+" is added to ready state")
+
+								elif(temp[1] == "prep"):
+									self.preparing.append(temp)
+									self.remarks.append(temp[0]+" is added to cooking state")
+
+							break
+
+			if(self.ourStove.isOccupied() == True):						#Occupied
+				self.ourStove.decrTime()
+				self.ourStove.TQ = self.ourStove.TQ + 1
+
+				if ( self.ourStove.getTime() == 0):
+					self.remarks.append(self.ourStove.getName() + " cooking ended")
+					returned = self.ourStove.remove()
+					#Check if there is still an instruction
+					nameToFind = returned[0]
+					match = 0
+
+					for y in range(0, len(self.dishWaiting)):
+						if( self.dishWaiting[y].getName() == nameToFind):
+							if self.dishWaiting[y].showQueue() == []:
+								name = self.dishWaiting[y].getName()
+								self.dishWaiting.pop(y)
+								self.remarks.append(name +" finished")
+								self.ourStove.TQ = 0
+
+							else:
+								match = 1
+
+							break
+
+					if(match == 1):
+						self.temporary.append(returned )
+
+				elif ( self.ourStove.TQ == TQ):
+					# Checks if TQ is reached. If it is, reset TQ = 0
+					self.ourStove.TQ = 0
+
+					# We are not sure automatically if we are going to pre-empt. Let's check ready first.
+					if(self.ready != []):
+					# Preempt the current dish, put to temp queue
+						self.remarks.append(self.ourStove.getName() + " pre-empted.")
+						toTemp = self.ourStove.remove()
+						self.temporary.append(toTemp)
+
+
+			if(self.ourStove.isOccupied() == False):
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
+					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
+
+				else:								#Kung clean siya
+					if(self.ready != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+
+
+			# PRINTING IS HERE
+			# self.printStatus()
+
+			# Print to file
+			self.printToFile(f)
+
+		# Close the file	
+		f.close()
+
+	def SJF(self):						# Shortest Job First
 		pass
-		
-	def run():
+
+	def Prio(self):						# Priority with Aging
+		pass
+
+	def Multi(self):					# Multiqueue
 		pass
 		
 class Dish():
@@ -583,76 +738,112 @@ class Iron_Chef():
 	def start(self):
 		self.readFile()
 
+	def FCFS(self):
 		dupli = copy.deepcopy(self.dishWaiting)
 		b = Scheduler(list(dupli))
 		b.FCFS()
 
+	def RRTQ3(self):
 		dupli = copy.deepcopy(self.dishWaiting)
 		c = Scheduler(list(dupli))
-		c.RoundRobin()
+		c.RRTQ3()
 
+	def GenRR(self, TQ):
+		dupli = copy.deepcopy(self.dishWaiting)
+		d = Scheduler(list(dupli))
+		d.GenRR(TQ)
 
+	def SJF(self):
+		dupli = copy.deepcopy(self.dishWaiting)
+		e = Scheduler(list(dupli))
+		e.SJF()
 
-		"""TEST PRINTING IF DISH WORKED
-		for dish in self.dishWaiting:
-			print "Dish Name: ", dish.getName()
-			print "Dish Time: ", dish.getTime()
-			print "Dish Priority: ", dish.getPriority()
-			print "Instructions:"
-			print dish.showQueue()
-		"""
+	def Prio(self):
+		dupli = copy.deepcopy(self.dishWaiting)
+		f = Scheduler(list(dupli))
+		f.Prio()
+
+	def Multi(self):
+		dupli = copy.deepcopy(self.dishWaiting)
+		g = Scheduler(list(dupli))
+		g.Multi()
 
 class GUI:
 	def __init__(self):
 		self.root = Tk()
-		self.root.geometry("600x400")
+		self.root.geometry("270x360")
 		self.root.config(bg="LIGHTCYAN2")
 		self.root.resizable(width=FALSE, height=FALSE)
 		self.root.title("Iron Chef v1.03")
+
+		self.chefInstance = Iron_Chef()
+		self.chefInstance.start()
+
+	def ButtonFCFS(self):
+		self.chefInstance.FCFS()
+		os.system("output.csv")
+
+	def ButtonRRTQ3(self):
+		self.chefInstance.RRTQ3()
+		os.system("output.csv")
+
+	def ButtonGenRR(self):
+		self.chefInstance.GenRR(int(self.TQEntry.get()))
+		os.system("output.csv")
 		
+	def ButtonSJF(self):
+		self.chefInstance.SJF()
+		os.system("output.csv")
+
+	def ButtonPrio(self):
+		self.chefInstance.Prio()
+		os.system("output.csv")
+
+	def ButtonMulti(self):
+		self.chefInstance.Multi()
+		os.system("output.csv")
+
 	def show(self):
-		Up = Label(self.root, text="I R O N  C H E F", font=("Tahoma", 30, "bold"), bd=10, bg="DODGER BLUE", fg="LIGHTCYAN1")
-		Up.pack(side=TOP, fill=X, pady=(0,5))
+		# Upper border
+		Up = Label(self.root, text="IRON CHEF", font=("Tahoma", 30, "bold"), bd=10, bg="DODGER BLUE", fg="LIGHTCYAN1")
+		Up.pack(side=TOP, fill=X)
 
-		Down = Frame(self.root, width=600, height=50, bg="DODGER BLUE")
-		Down.pack(side=BOTTOM)
-		
-		mainFrame = Frame(self.root, bg="DODGER BLUE")
-		mainFrame.pack(fill=X, pady=(0,5))
-		
-		timeFRAME = Frame(mainFrame, bg="DODGER BLUE")
-		timeFRAME.pack(side=LEFT, padx=3, pady=5)
-		timeL = Label(timeFRAME, text="Time", font=("Tahoma", 10, "bold"))
-		timeL.pack(side=TOP, pady=1, fill=X)
-		
-		stoveFRAME = Frame(mainFrame, bg="DODGER BLUE")
-		stoveFRAME.pack(side=LEFT, padx=20, pady=5)
-		stoveL = Label(stoveFRAME, text="Stove", font=("Tahoma", 10, "bold"))
-		stoveL.pack(side=TOP, pady=1, fill=X)
-		
-		readyFRAME = Frame(mainFrame, bg="DODGER BLUE")
-		readyFRAME.pack(side=LEFT, padx=20, pady=5)
-		readyL = Label(readyFRAME, text="Ready", font=("Tahoma", 10, "bold"))
-		readyL.pack(side=TOP, pady=1, fill=X)
+		# Center Frame
+		MainFrame = Frame(self.root, bg="LIGHTCYAN1")
+		MainFrame.pack(side=TOP)
 
-		assistantsFRAME = Frame(mainFrame, bg="DODGER BLUE")
-		assistantsFRAME.pack(side=LEFT, padx=40, pady=5)
-		assistantsL = Label(assistantsFRAME, text="Assistants", font=("Tahoma", 10, "bold"))
-		assistantsL.pack(side=TOP, pady=1, fill=X)
+		# Buttons
+		FCFS = Button(MainFrame, text="First Come, First Serve", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonFCFS())
+		FCFS.pack(pady=5, padx=5, fill=X)
 
-		remarksFRAME = Frame(mainFrame, bg="DODGER BLUE")
-		remarksFRAME.pack(side=LEFT, padx=40, pady=5)
-		remarksL = Label(remarksFRAME, text="Remarks", font=("Tahoma", 10, "bold"))
-		remarksL.pack(side=TOP, pady=1, fill=X)
+		RRTQ3 = Button(MainFrame, text="Round Robin (TQ = 3)", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonRRTQ3())
+		RRTQ3.pack(pady=5, padx=5, fill=X)
 
-		contentText = ScrolledText.ScrolledText(self.root, width=49, height=17, font=("Tahoma", 12), bd=5, bg="WHITE", relief=FLAT)
-		contentText.pack(side=TOP, fill=X, pady=10, padx=5)
-		contentText.insert(INSERT, "1   adobo etc etc WEW LAST NA LNG TO HIRAP PALA GAWIN LOL")
-		contentText.config(state=DISABLED)
+		GerRREntryFrame = Frame(MainFrame, bg="LIGHTCYAN2")
+		GerRREntryFrame.pack(pady=5, padx=5, fill=X)
+
+		GenRR = Button(GerRREntryFrame, text="Generalized Round Robin", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonGenRR())
+		GenRR.pack(pady=5, padx=5, fill=X, side=LEFT)
+
+		self.TQEntry = Entry(GerRREntryFrame, width=4, justify=CENTER, relief=FLAT, font=("Consolas", 11))
+		self.TQEntry.pack(side=LEFT, pady=5, padx=5, fill=X,)
+		self.TQEntry.focus_set()
+
+		SJF = Button(MainFrame, text="Shortest Job First", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonSJF())
+		SJF.pack(pady=5, padx=5, fill=X)
+
+		Prio = Button(MainFrame, text="Priority With Aging", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonPrio())
+		Prio.pack(pady=5, padx=5, fill=X)
+
+		Multi = Button(MainFrame, text="Multiqueue", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonMulti())
+		Multi.pack(pady=5, padx=5, fill=X)
+
+		# Lower border
+		Down = Label(self.root, text="CS 140 MP1", font=("Tahoma", 13, "italic"), width=600, height=50, bg="DODGER BLUE", fg="LIGHTCYAN1")
+		Down.pack(side=BOTTOM, fill=X)
 
 		self.root.mainloop()
 
-
-ironChefInstance = Iron_Chef()
-ironChefInstance.start()			#Read file ka muna
+a = GUI()
+a.show()			
 
