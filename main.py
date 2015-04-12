@@ -396,7 +396,7 @@ class Scheduler():
 						print "\nTIMER IN TEMP: " + str(self.temporary[0][2]) + "\n"
 						if (self.temporary[0][2] != 0):
 							self.ready.append(self.temporary[0])
-							self.temporary.pop(0)	
+							self.temporary.remove(self.temporary[0])	
 						else:
 							#get name then match in dish waiting
 							nameToMatch = self.temporary[0][0]
@@ -451,6 +451,8 @@ class Scheduler():
 								name = self.dishWaiting[y].getName()
 								self.dishWaiting.pop(y)
 								self.remarks.append(name +" finished")
+								self.ourStove.TQ = 0
+
 							else:
 								match = 1
 
@@ -459,7 +461,7 @@ class Scheduler():
 					if(match == 1):
 						self.temporary.insert(0, returned )
 
-				if ( self.ourStove.TQ == 3):
+				elif ( self.ourStove.TQ == 3):
 					# Checks if TQ is reached. If it is, reset TQ = 0
 					self.ourStove.TQ = 0
 
