@@ -16,6 +16,7 @@ class Stove():
 		self.isHotVar = False
 		self.isCleanVar = True
 		self.isOccupiedVar = False
+		self.TQ = 0
 
 	def getCurrentList(self):
 		return self.current
@@ -302,21 +303,38 @@ class Scheduler():
 	def Priority(self):
 		pass
 
-	def RoundRobin(self):
+	def RoundRobin(self):		 #RoundRobin TQ=3
 		self.time = 0
-
+		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
+			#like a getch function
+			#if(self.time % 20 == 0):
+			#input()
+
 			self.time = self.time + 1
 
+			# 1. Check all the dishes in dishWaiting. Check for arrival
+
 			for i in range(0, len(self.dishWaiting)):
+
+				# Check if there is an upcoming dish by matching the time of arrival with the current time.
+
 				if (self.dishWaiting[i].getTime() == self.time) :
+					
+					#If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state. (SEE INSTRUCTION)
 					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+
+						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
+
 						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
 						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
+						# print self.time, temp
+
 
 						if(temp[1] == "cook"):						#Go to ready state
 							self.ready.insert(0, temp)
@@ -326,15 +344,29 @@ class Scheduler():
 							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.insert(0, temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
+						
+
+			
+			#2. PREPARATION
+
+			#a. Check if preparation is not empty
 
 			if(self.preparing != []):
+
+				#b. If not, iterate through the list, and subtract 1 in preparation timer. 
 				for x in range(0, len(self.preparing)):
 					self.preparing[x][2] = int(self.preparing[x][2]) - 1
 
+					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+					
 					if self.preparing[x][2] == 0:
 						nameToMatch = (self.preparing.pop(x))[0]
 						
+						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
+						# If there is, (transfer it to the ready state -if cooking yung next state)
+
 						for y in range(0, len(self.dishWaiting)):
+							# This asks kung saan yun at kung may kasunod pa na instruction...
 
 							if( (self.dishWaiting[y].getName() == nameToMatch)):
 								if self.dishWaiting[y].showQueue() == []:
@@ -352,36 +384,46 @@ class Scheduler():
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
 
+			# COOKING
+			# Check if the stove is occupied
 			if(self.ourStove.isOccupied() == False):
 				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
 					self.ourStove.clean()
 					self.remarks.append("Cleaning stove")
 
 					if(self.temporary != []):
-						nameToMatch = self.temporary[0][0]
-						self.temporary.pop(0)
+						#Assign
+						print "\nTIMER IN TEMP: " + str(self.temporary[0][2]) + "\n"
+						if (self.temporary[0][2] != 0):
+							self.ready.append(self.temporary[0])
+							self.temporary.pop(0)	
+						else:
+							#get name then match in dish waiting
+							nameToMatch = self.temporary[0][0]
+							self.temporary.pop(0)
 
-						for y in range(0, len(self.dishWaiting)):
-							if(self.dishWaiting[y].getName() == nameToMatch):
-								name = self.dishWaiting[y].getName()
-								if self.dishWaiting[y].showQueue() == []:
-									self.dishWaiting.pop(y)
-									self.remarks.append(name+" finished")
+							for y in range(0, len(self.dishWaiting)):
+								if(self.dishWaiting[y].getName() == nameToMatch):
+									name = self.dishWaiting[y].getName()
+									if self.dishWaiting[y].showQueue() == []:
+										self.dishWaiting.pop(y)
+										self.remarks.append(name+" finished")
 
-								else:
-									temp = self.dishWaiting[y].dequeue()
-									temp.insert(0, self.dishWaiting[y].getName())
+									else:
+										temp = self.dishWaiting[y].dequeue()
+										temp.insert(0, self.dishWaiting[y].getName())
 
-									if(temp[1] == "cook"):						#Go to ready state
-										self.ready.insert(0, temp)
-										self.remarks.append(temp[0]+" is added to ready state")
+										if(temp[1] == "cook"):						#Go to ready state
+											self.ready.insert(0, temp)
+											self.remarks.append(temp[0]+" is added to ready state")
 
-									elif(temp[1] == "prep"):
-										self.preparing.insert(0, temp)
-										self.remarks.append(temp[0]+" is added to cooking state")
+										elif(temp[1] == "prep"):
+											self.preparing.insert(0, temp)
+											self.remarks.append(temp[0]+" is added to cooking state")
 
-								break
-		
+									break
+
+						
 				else:								#Kung clean siya
 					if(self.ready != []):
 						if(self.ourStove.isHot() == True):
@@ -394,6 +436,8 @@ class Scheduler():
 
 			else:							#Occupied
 				self.ourStove.decrTime()
+				self.ourStove.TQ = self.ourStove.TQ + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -415,6 +459,14 @@ class Scheduler():
 					if(match == 1):
 						self.temporary.insert(0, returned )
 
+				if ( self.ourStove.TQ == 3):
+					# Checks if TQ is reached. If it is, reset TQ = 0
+					self.ourStove.TQ = 0
+
+					# Preempt the current dish, put to temp queue
+					self.remarks.append(self.ourStove.getName() + " pre-empted")
+					toTemp = self.ourStove.remove()
+					self.temporary.append(toTemp)
 
 			# PRINTING IS HERE
 			self.printStatus()
@@ -425,7 +477,6 @@ class Scheduler():
 		print("Successfully Saved To output.csv!")	
 		# Close the file	
 		f.close()
-
 	def MultiQueue(self):
 		pass
 		
