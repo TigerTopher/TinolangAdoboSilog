@@ -170,12 +170,12 @@ class Scheduler():
 
 
 						if(temp[1] == "cook"):						#Go to ready state
-							self.ready.insert(0, temp)
+							self.ready.append(temp)
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
 							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
-							self.preparing.insert(0, temp)
+							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
 
@@ -210,12 +210,12 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.insert(0, self.dishWaiting[y].getName())
+									temp.append( self.dishWaiting[y].getName())
 									if(temp[1] == "cook"):						#Go to ready state
-										self.ready.insert(0, temp)
+										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
-										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
+										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
 						x = x - 1
@@ -243,14 +243,14 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.insert(0, self.dishWaiting[y].getName())
+									temp.append(self.dishWaiting[y].getName())
 
 									if(temp[1] == "cook"):						#Go to ready state
-										self.ready.insert(0, temp)
+										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 
 									elif(temp[1] == "prep"):
-										self.preparing.insert(0, temp)
+										self.preparing.append( temp)
 										self.remarks.append(temp[0]+" is added to cooking state")
 
 								break
@@ -287,7 +287,7 @@ class Scheduler():
 							break
 
 					if(match == 1):
-						self.temporary.insert(0, returned )
+						self.temporary.append(returned )
 
 
 			# PRINTING IS HERE
@@ -315,9 +315,6 @@ class Scheduler():
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
-			#like a getch function
-			#if(self.time % 20 == 0):
-			#input()
 
 			self.time = self.time + 1
 
@@ -335,18 +332,18 @@ class Scheduler():
 						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
 
 						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
-						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						temp.append(self.dishWaiting[i].getName())	#Added the name
 						# This last five lines were just for formatting. Temp contains the dish name, instruction, and time count
 						# print self.time, temp
 
 
 						if(temp[1] == "cook"):						#Go to ready state
-							self.ready.insert(0, temp)
+							self.ready.append(temp)
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
 							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
-							self.preparing.insert(0, temp)
+							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
 
@@ -381,12 +378,12 @@ class Scheduler():
 
 								else:
 									temp = self.dishWaiting[y].dequeue()
-									temp.insert(0, self.dishWaiting[y].getName())
+									temp.append(self.dishWaiting[y].getName())
 									if(temp[1] == "cook"):						#Go to ready state
-										self.ready.insert(0, temp)
+										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
-										self.preparing.insert(0, temp)				# No need to add 1 since no more deduction from preparation to be done
+										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 						
 								break
@@ -422,14 +419,14 @@ class Scheduler():
 
 									else:
 										temp = self.dishWaiting[y].dequeue()
-										temp.insert(0, self.dishWaiting[y].getName())
+										temp.append(self.dishWaiting[y].getName())
 
 										if(temp[1] == "cook"):						#Go to ready state
-											self.ready.insert(0, temp)
+											self.ready.append(temp)
 											self.remarks.append(temp[0]+" is added to ready state")
 
 										elif(temp[1] == "prep"):
-											self.preparing.insert(0, temp)
+											self.preparing.append(temp)
 											self.remarks.append(temp[0]+" is added to cooking state")
 
 									break
@@ -470,14 +467,14 @@ class Scheduler():
 							break
 
 					if(match == 1):
-						self.temporary.insert(0, returned )
+						self.temporary.append(returned )
 
 				elif ( self.ourStove.TQ == 3):
 					# Checks if TQ is reached. If it is, reset TQ = 0
 					self.ourStove.TQ = 0
 
 					# Preempt the current dish, put to temp queue
-					self.remarks.append(self.ourStove.getName() + " pre-empted")
+					self.remarks.append(self.ourStove.getName() + " pre-empted.")
 					toTemp = self.ourStove.remove()
 					self.temporary.append(toTemp)
 
@@ -584,9 +581,9 @@ class Iron_Chef():
 		b = Scheduler(list(dupli))
 		b.FCFS()
 
-		dupli = copy.deepcopy(self.dishWaiting)
-		c = Scheduler(list(dupli))
-		c.RoundRobin()
+		#dupli = copy.deepcopy(self.dishWaiting)
+		#c = Scheduler(list(dupli))
+		#c.RoundRobin()
 
 
 

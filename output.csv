@@ -3,67 +3,67 @@ Time, Stove, Ready, Assistants, Remarks
 2,adobo(cook=30) ,none ,none ,Started Cooking adobo. 
 3,adobo(cook=29) ,none ,none ,---
 4,adobo(cook=28) ,none ,none ,---
-5,empty ,none ,tinola(prep=9) ,tinola is added to preparing. adobo pre-empted. 
+5,empty ,none ,tinola(prep=9) ,tinola is added to preparing. adobo pre-empted.. 
 6,empty ,adobo(cook=27) ,tinola(prep=8) ,Cleaning stove. 
 7,empty ,adobo(cook=27) ,tinola(prep=7) ,Preheating stove. 
 8,karekare(cook=20) ,adobo(cook=27) ,tinola(prep=6) ,karekare is added to ready state. Started Cooking karekare. 
 9,karekare(cook=19) ,adobo(cook=27) ,tinola(prep=5) ,---
 10,karekare(cook=18) ,adobo(cook=27) ,tinola(prep=4) ,---
-11,empty ,adobo(cook=27) ,tinola(prep=3) ,karekare pre-empted. 
+11,empty ,adobo(cook=27) ,tinola(prep=3) ,karekare pre-empted.. 
 12,empty ,adobo(cook=27) karekare(cook=17) ,tinola(prep=2) ,Cleaning stove. 
 13,empty ,adobo(cook=27) karekare(cook=17) ,tinola(prep=1) ,Preheating stove. 
 14,tinola(cook=10) ,adobo(cook=27) karekare(cook=17) ,none ,tinola is added to ready state. Started Cooking tinola. 
 15,tinola(cook=9) ,adobo(cook=27) karekare(cook=17) ,none ,---
 16,tinola(cook=8) ,adobo(cook=27) karekare(cook=17) ,none ,---
-17,empty ,adobo(cook=27) karekare(cook=17) ,none ,tinola pre-empted. 
+17,empty ,adobo(cook=27) karekare(cook=17) ,none ,tinola pre-empted.. 
 18,empty ,adobo(cook=27) karekare(cook=17) tinola(cook=7) ,none ,Cleaning stove. 
 19,empty ,adobo(cook=27) karekare(cook=17) tinola(cook=7) ,none ,Preheating stove. 
 20,adobo(cook=27) ,karekare(cook=17) tinola(cook=7) ,none ,Started Cooking adobo. 
 21,adobo(cook=26) ,karekare(cook=17) tinola(cook=7) ,none ,---
 22,adobo(cook=25) ,karekare(cook=17) tinola(cook=7) ,none ,---
-23,empty ,karekare(cook=17) tinola(cook=7) ,none ,adobo pre-empted. 
+23,empty ,karekare(cook=17) tinola(cook=7) ,none ,adobo pre-empted.. 
 24,empty ,karekare(cook=17) tinola(cook=7) adobo(cook=24) ,none ,Cleaning stove. 
 25,empty ,karekare(cook=17) tinola(cook=7) adobo(cook=24) ,none ,Preheating stove. 
 26,karekare(cook=17) ,tinola(cook=7) adobo(cook=24) ,none ,Started Cooking karekare. 
 27,karekare(cook=16) ,tinola(cook=7) adobo(cook=24) ,none ,---
 28,karekare(cook=15) ,tinola(cook=7) adobo(cook=24) ,none ,---
-29,empty ,tinola(cook=7) adobo(cook=24) ,none ,karekare pre-empted. 
+29,empty ,tinola(cook=7) adobo(cook=24) ,none ,karekare pre-empted.. 
 30,empty ,tinola(cook=7) adobo(cook=24) karekare(cook=14) ,none ,Cleaning stove. 
 31,empty ,tinola(cook=7) adobo(cook=24) karekare(cook=14) ,none ,Preheating stove. 
 32,tinola(cook=7) ,adobo(cook=24) karekare(cook=14) ,none ,Started Cooking tinola. 
 33,tinola(cook=6) ,adobo(cook=24) karekare(cook=14) ,none ,---
 34,tinola(cook=5) ,adobo(cook=24) karekare(cook=14) ,none ,---
-35,empty ,adobo(cook=24) karekare(cook=14) ,none ,tinola pre-empted. 
+35,empty ,adobo(cook=24) karekare(cook=14) ,none ,tinola pre-empted.. 
 36,empty ,adobo(cook=24) karekare(cook=14) tinola(cook=4) ,none ,Cleaning stove. 
 37,empty ,adobo(cook=24) karekare(cook=14) tinola(cook=4) ,none ,Preheating stove. 
 38,adobo(cook=24) ,karekare(cook=14) tinola(cook=4) ,none ,Started Cooking adobo. 
 39,adobo(cook=23) ,karekare(cook=14) tinola(cook=4) ,none ,---
 40,adobo(cook=22) ,karekare(cook=14) tinola(cook=4) ,none ,---
-41,empty ,karekare(cook=14) tinola(cook=4) ,none ,adobo pre-empted. 
+41,empty ,karekare(cook=14) tinola(cook=4) ,none ,adobo pre-empted.. 
 42,empty ,karekare(cook=14) tinola(cook=4) adobo(cook=21) ,none ,Cleaning stove. 
 43,empty ,karekare(cook=14) tinola(cook=4) adobo(cook=21) ,none ,Preheating stove. 
 44,karekare(cook=14) ,tinola(cook=4) adobo(cook=21) ,none ,Started Cooking karekare. 
 45,karekare(cook=13) ,tinola(cook=4) adobo(cook=21) ,none ,---
 46,karekare(cook=12) ,tinola(cook=4) adobo(cook=21) ,none ,---
-47,empty ,tinola(cook=4) adobo(cook=21) ,none ,karekare pre-empted. 
+47,empty ,tinola(cook=4) adobo(cook=21) ,none ,karekare pre-empted.. 
 48,empty ,tinola(cook=4) adobo(cook=21) karekare(cook=11) ,none ,Cleaning stove. 
 49,empty ,tinola(cook=4) adobo(cook=21) karekare(cook=11) ,none ,Preheating stove. 
 50,tinola(cook=4) ,adobo(cook=21) karekare(cook=11) ,none ,Started Cooking tinola. 
 51,tinola(cook=3) ,adobo(cook=21) karekare(cook=11) ,none ,---
 52,tinola(cook=2) ,adobo(cook=21) karekare(cook=11) ,none ,---
-53,empty ,adobo(cook=21) karekare(cook=11) ,none ,tinola pre-empted. 
+53,empty ,adobo(cook=21) karekare(cook=11) ,none ,tinola pre-empted.. 
 54,empty ,adobo(cook=21) karekare(cook=11) tinola(cook=1) ,none ,Cleaning stove. 
 55,empty ,adobo(cook=21) karekare(cook=11) tinola(cook=1) ,none ,Preheating stove. 
 56,adobo(cook=21) ,karekare(cook=11) tinola(cook=1) ,none ,Started Cooking adobo. 
 57,adobo(cook=20) ,karekare(cook=11) tinola(cook=1) ,none ,---
 58,adobo(cook=19) ,karekare(cook=11) tinola(cook=1) ,none ,---
-59,empty ,karekare(cook=11) tinola(cook=1) ,none ,adobo pre-empted. 
+59,empty ,karekare(cook=11) tinola(cook=1) ,none ,adobo pre-empted.. 
 60,empty ,karekare(cook=11) tinola(cook=1) adobo(cook=18) ,none ,Cleaning stove. 
 61,empty ,karekare(cook=11) tinola(cook=1) adobo(cook=18) ,none ,Preheating stove. 
 62,karekare(cook=11) ,tinola(cook=1) adobo(cook=18) ,none ,Started Cooking karekare. 
 63,karekare(cook=10) ,tinola(cook=1) adobo(cook=18) ,none ,---
 64,karekare(cook=9) ,tinola(cook=1) adobo(cook=18) ,none ,---
-65,empty ,tinola(cook=1) adobo(cook=18) ,none ,karekare pre-empted. 
+65,empty ,tinola(cook=1) adobo(cook=18) ,none ,karekare pre-empted.. 
 66,empty ,tinola(cook=1) adobo(cook=18) karekare(cook=8) ,none ,Cleaning stove. 
 67,empty ,tinola(cook=1) adobo(cook=18) karekare(cook=8) ,none ,Preheating stove. 
 68,tinola(cook=1) ,adobo(cook=18) karekare(cook=8) ,none ,Started Cooking tinola. 
@@ -72,43 +72,43 @@ Time, Stove, Ready, Assistants, Remarks
 71,empty ,adobo(cook=18) karekare(cook=8) ,tinola(prep=9) ,Preheating stove. 
 72,adobo(cook=18) ,karekare(cook=8) ,tinola(prep=8) ,Started Cooking adobo. 
 73,adobo(cook=17) ,karekare(cook=8) ,tinola(prep=7) ,---
-74,empty ,karekare(cook=8) ,tinola(prep=6) ,adobo pre-empted. 
+74,empty ,karekare(cook=8) ,tinola(prep=6) ,adobo pre-empted.. 
 75,empty ,karekare(cook=8) adobo(cook=16) ,tinola(prep=5) ,Cleaning stove. 
 76,empty ,karekare(cook=8) adobo(cook=16) ,tinola(prep=4) ,Preheating stove. 
 77,karekare(cook=8) ,adobo(cook=16) ,tinola(prep=3) ,Started Cooking karekare. 
 78,karekare(cook=7) ,adobo(cook=16) ,tinola(prep=2) ,---
 79,karekare(cook=6) ,adobo(cook=16) ,tinola(prep=1) ,---
-80,empty ,tinola(cook=10) adobo(cook=16) ,none ,tinola is added to ready state. karekare pre-empted. 
+80,empty ,tinola(cook=10) adobo(cook=16) ,none ,tinola is added to ready state. karekare pre-empted.. 
 81,empty ,tinola(cook=10) adobo(cook=16) karekare(cook=5) ,none ,Cleaning stove. 
 82,empty ,tinola(cook=10) adobo(cook=16) karekare(cook=5) ,none ,Preheating stove. 
 83,tinola(cook=10) ,adobo(cook=16) karekare(cook=5) ,none ,Started Cooking tinola. 
 84,tinola(cook=9) ,adobo(cook=16) karekare(cook=5) ,none ,---
 85,tinola(cook=8) ,adobo(cook=16) karekare(cook=5) ,none ,---
-86,empty ,adobo(cook=16) karekare(cook=5) ,none ,tinola pre-empted. 
+86,empty ,adobo(cook=16) karekare(cook=5) ,none ,tinola pre-empted.. 
 87,empty ,adobo(cook=16) karekare(cook=5) tinola(cook=7) ,none ,Cleaning stove. 
 88,empty ,adobo(cook=16) karekare(cook=5) tinola(cook=7) ,none ,Preheating stove. 
 89,adobo(cook=16) ,karekare(cook=5) tinola(cook=7) ,none ,Started Cooking adobo. 
 90,adobo(cook=15) ,karekare(cook=5) tinola(cook=7) ,none ,---
 91,adobo(cook=14) ,karekare(cook=5) tinola(cook=7) ,none ,---
-92,empty ,karekare(cook=5) tinola(cook=7) ,none ,adobo pre-empted. 
+92,empty ,karekare(cook=5) tinola(cook=7) ,none ,adobo pre-empted.. 
 93,empty ,karekare(cook=5) tinola(cook=7) adobo(cook=13) ,none ,Cleaning stove. 
 94,empty ,karekare(cook=5) tinola(cook=7) adobo(cook=13) ,none ,Preheating stove. 
 95,karekare(cook=5) ,tinola(cook=7) adobo(cook=13) ,none ,Started Cooking karekare. 
 96,karekare(cook=4) ,tinola(cook=7) adobo(cook=13) ,none ,---
 97,karekare(cook=3) ,tinola(cook=7) adobo(cook=13) ,none ,---
-98,empty ,tinola(cook=7) adobo(cook=13) ,none ,karekare pre-empted. 
+98,empty ,tinola(cook=7) adobo(cook=13) ,none ,karekare pre-empted.. 
 99,empty ,tinola(cook=7) adobo(cook=13) karekare(cook=2) ,none ,Cleaning stove. 
 100,empty ,tinola(cook=7) adobo(cook=13) karekare(cook=2) ,none ,Preheating stove. 
 101,tinola(cook=7) ,adobo(cook=13) karekare(cook=2) ,none ,Started Cooking tinola. 
 102,tinola(cook=6) ,adobo(cook=13) karekare(cook=2) ,none ,---
 103,tinola(cook=5) ,adobo(cook=13) karekare(cook=2) ,none ,---
-104,empty ,adobo(cook=13) karekare(cook=2) ,none ,tinola pre-empted. 
+104,empty ,adobo(cook=13) karekare(cook=2) ,none ,tinola pre-empted.. 
 105,empty ,adobo(cook=13) karekare(cook=2) tinola(cook=4) ,none ,Cleaning stove. 
 106,empty ,adobo(cook=13) karekare(cook=2) tinola(cook=4) ,none ,Preheating stove. 
 107,adobo(cook=13) ,karekare(cook=2) tinola(cook=4) ,none ,Started Cooking adobo. 
 108,adobo(cook=12) ,karekare(cook=2) tinola(cook=4) ,none ,---
 109,adobo(cook=11) ,karekare(cook=2) tinola(cook=4) ,none ,---
-110,empty ,karekare(cook=2) tinola(cook=4) ,none ,adobo pre-empted. 
+110,empty ,karekare(cook=2) tinola(cook=4) ,none ,adobo pre-empted.. 
 111,empty ,karekare(cook=2) tinola(cook=4) adobo(cook=10) ,none ,Cleaning stove. 
 112,empty ,karekare(cook=2) tinola(cook=4) adobo(cook=10) ,none ,Preheating stove. 
 113,karekare(cook=2) ,tinola(cook=4) adobo(cook=10) ,none ,Started Cooking karekare. 
@@ -117,13 +117,13 @@ Time, Stove, Ready, Assistants, Remarks
 116,empty ,tinola(cook=4) adobo(cook=10) ,karekare(prep=20) ,Cleaning stove. karekare is added to cooking state. 
 117,empty ,tinola(cook=4) adobo(cook=10) ,karekare(prep=19) ,Preheating stove. 
 118,tinola(cook=4) ,adobo(cook=10) ,karekare(prep=18) ,Started Cooking tinola. 
-119,empty ,adobo(cook=10) ,karekare(prep=17) ,tinola pre-empted. 
+119,empty ,adobo(cook=10) ,karekare(prep=17) ,tinola pre-empted.. 
 120,empty ,adobo(cook=10) tinola(cook=3) ,karekare(prep=16) ,Cleaning stove. 
 121,empty ,adobo(cook=10) tinola(cook=3) ,karekare(prep=15) ,Preheating stove. 
 122,adobo(cook=10) ,tinola(cook=3) ,karekare(prep=14) ,Started Cooking adobo. 
 123,adobo(cook=9) ,tinola(cook=3) ,karekare(prep=13) ,---
 124,adobo(cook=8) ,tinola(cook=3) ,karekare(prep=12) ,---
-125,empty ,tinola(cook=3) ,karekare(prep=11) ,adobo pre-empted. 
+125,empty ,tinola(cook=3) ,karekare(prep=11) ,adobo pre-empted.. 
 126,empty ,tinola(cook=3) adobo(cook=7) ,karekare(prep=10) ,Cleaning stove. 
 127,empty ,tinola(cook=3) adobo(cook=7) ,karekare(prep=9) ,Preheating stove. 
 128,tinola(cook=3) ,adobo(cook=7) ,karekare(prep=8) ,Started Cooking tinola. 
@@ -214,19 +214,19 @@ Time, Stove, Ready, Assistants, Remarks
 213,adobo(cook=10) ,none ,none ,Started Cooking adobo. 
 214,adobo(cook=9) ,none ,none ,---
 215,adobo(cook=8) ,none ,none ,---
-216,empty ,none ,none ,adobo pre-empted. 
+216,empty ,none ,none ,adobo pre-empted.. 
 217,empty ,adobo(cook=7) ,none ,Cleaning stove. 
 218,empty ,adobo(cook=7) ,none ,Preheating stove. 
 219,adobo(cook=7) ,none ,none ,Started Cooking adobo. 
 220,adobo(cook=6) ,none ,none ,---
 221,adobo(cook=5) ,none ,none ,---
-222,empty ,none ,none ,adobo pre-empted. 
+222,empty ,none ,none ,adobo pre-empted.. 
 223,empty ,adobo(cook=4) ,none ,Cleaning stove. 
 224,empty ,adobo(cook=4) ,none ,Preheating stove. 
 225,adobo(cook=4) ,none ,none ,Started Cooking adobo. 
 226,adobo(cook=3) ,none ,none ,---
 227,adobo(cook=2) ,none ,none ,---
-228,empty ,none ,none ,adobo pre-empted. 
+228,empty ,none ,none ,adobo pre-empted.. 
 229,empty ,adobo(cook=1) ,none ,Cleaning stove. 
 230,empty ,adobo(cook=1) ,none ,Preheating stove. 
 231,adobo(cook=1) ,none ,none ,Started Cooking adobo. 
