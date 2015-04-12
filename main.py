@@ -222,51 +222,34 @@ class Scheduler():
 					x = x + 1
 
 			# COOKING
-			# Check if the stove is occupied
-			if(self.ourStove.isOccupied() == False):
-				if(self.ourStove.isClean() == False):	#Kung hindi siya clean. Possibleng mayroong nasa temporary
-					self.ourStove.clean()
-					self.remarks.append("Cleaning stove")
+			if(self.temporary != []):
+				#get name then match in dish waiting
+				nameToMatch = self.temporary[0][0]
+				self.temporary.pop(0)
 
-					if(self.temporary != []):
-						#get name then match in dish waiting
-						nameToMatch = self.temporary[0][0]
-						self.temporary.pop(0)
+				#Assign
+				for y in range(0, len(self.dishWaiting)):
+					if(self.dishWaiting[y].getName() == nameToMatch):
+						name = self.dishWaiting[y].getName()
+						if self.dishWaiting[y].showQueue() == []:
+							self.dishWaiting.pop(y)
+							self.remarks.append(name+" finished")
 
-						#Assign
-						for y in range(0, len(self.dishWaiting)):
-							if(self.dishWaiting[y].getName() == nameToMatch):
-								name = self.dishWaiting[y].getName()
-								if self.dishWaiting[y].showQueue() == []:
-									self.dishWaiting.pop(y)
-									self.remarks.append(name+" finished")
-
-								else:
-									temp = self.dishWaiting[y].dequeue()
-									temp.insert(0,self.dishWaiting[y].getName())
-
-									if(temp[1] == "cook"):						#Go to ready state
-										self.ready.append(temp)
-										self.remarks.append(temp[0]+" is added to ready state")
-
-									elif(temp[1] == "prep"):
-										self.preparing.append( temp)
-										self.remarks.append(temp[0]+" is added to cooking state")
-
-								break
-
-						
-				else:								#Kung clean siya
-					if(self.ready != []):
-						if(self.ourStove.isHot() == True):
-							newToCook = self.ready.pop(0)
-							self.ourStove.cook(newToCook)		#This already sets it to occupied
-							self.remarks.append("Started Cooking " + newToCook[0])
 						else:
-							self.ourStove.preheat()
-							self.remarks.append("Preheating stove")
+							temp = self.dishWaiting[y].dequeue()
+							temp.insert(0,self.dishWaiting[y].getName())
 
-			else:							#Occupied
+							if(temp[1] == "cook"):						#Go to ready state
+								self.ready.append(temp)
+								self.remarks.append(temp[0]+" is added to ready state")
+
+							elif(temp[1] == "prep"):
+								self.preparing.append( temp)
+								self.remarks.append(temp[0]+" is added to cooking state")
+
+						break
+
+			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
@@ -287,7 +270,26 @@ class Scheduler():
 							break
 
 					if(match == 1):
-						self.temporary.append(returned )
+						self.temporary.append(returned)
+
+
+			if(self.ourStove.isOccupied() == False):	#Empty
+
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean.Edi
+					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
+						
+				else:								#Kung clean siya
+					if(self.ready != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+
 
 
 			# PRINTING IS HERE
@@ -479,7 +481,7 @@ class Scheduler():
 						self.remarks.append(self.ourStove.getName() + " pre-empted.")
 						toTemp = self.ourStove.remove()
 						self.temporary.append(toTemp)
-					
+
 			# PRINTING IS HERE
 			self.printStatus()
 
