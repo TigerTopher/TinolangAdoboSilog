@@ -3,12 +3,25 @@
 
 ### Progress So Far: 
 
+Arc 9
+---
+Please fix output.csv command prompt error message
+Finalize Documentation
+Prepare Paper and Time Complexity
+Review and Use more Test Cases
+MULTIQUEUE
+
+Arc 8
+---
++ Finished SJF
++ Finished SJF with Preemptio
++ Finished Priority with Aging
+
 Arc 7
 ---
 + Finished GeneralizedRR
 + With GUI na!
 + Clicking a button (scheduler) opens the output.csv file =))
-+ SJF, Prio, and Multi to go! 
 
 Arc 6
 ---
