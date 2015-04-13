@@ -1,9 +1,6 @@
-tinola 20
-cook 10
+tinola 10
 prep 10
 cook 10
 prep 10
 cook 10
-prep 10
-cook 10
-prep 10
+prep 30
