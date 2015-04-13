@@ -84,7 +84,6 @@ class Scheduler():
 
 	def printStatus(self):
 
-		print str(self.time) + "  | " + str(self.ourStove.getCurrentList()) + " | " + str(self.ready) + " | " + str(self.preparing) + " | ",
 		for x in range(0, len(self.remarks)):
 			if x == 0:
 				print self.remarks[x],
@@ -142,7 +141,6 @@ class Scheduler():
 		if (self.ready != []):
 			for x in self.ready:
 				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
-				print (x[0] + "(" + x[1] + "=" + str(x[2]) + " )(Priority="+ str(x[3]) + ") ")
 		else:
 			filePointer.write("none ")
 		filePointer.write(",")

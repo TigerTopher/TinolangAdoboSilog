@@ -1,6 +1,9 @@
-karekare 5
-cook 20
-prep 20
+karekare 20
 cook 10
-prep 20
-cook 20
+prep 10
+cook 10
+prep 10
+cook 10
+prep 10
+cook 10
+prep 10

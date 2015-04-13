@@ -1,165 +1,156 @@
 Time, Stove, Ready, Assistants, Remarks
-1,empty ,adobo(cook=30)( Priority=3) ,none ,adobo is added to ready state. Preheating stove. 
-2,adobo(cook=30) ,none ,none ,Started Cooking adobo. 
-3,adobo(cook=29) ,none ,none ,---
-4,adobo(cook=28) ,none ,none ,---
-5,adobo(cook=27) ,none ,tinola(prep=9) ,tinola is added to preparing. 
-6,adobo(cook=26) ,none ,tinola(prep=8) ,---
-7,adobo(cook=25) ,none ,tinola(prep=7) ,---
-8,adobo(cook=24) ,karekare(cook=20)( Priority=5) ,tinola(prep=6) ,karekare is added to ready state. 
-9,adobo(cook=23) ,karekare(cook=20)( Priority=5) ,tinola(prep=5) ,---
-10,adobo(cook=22) ,karekare(cook=20)( Priority=5) ,tinola(prep=4) ,---
-11,adobo(cook=21) ,karekare(cook=20)( Priority=5) ,tinola(prep=3) ,---
-12,adobo(cook=20) ,karekare(cook=20)( Priority=5) ,tinola(prep=2) ,---
-13,adobo(cook=19) ,karekare(cook=20)( Priority=5) ,tinola(prep=1) ,---
-14,adobo(cook=18) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,tinola is added to ready state. 
-15,adobo(cook=17) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-16,adobo(cook=16) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-17,adobo(cook=15) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-18,adobo(cook=14) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-19,adobo(cook=13) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-20,adobo(cook=12) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-21,adobo(cook=11) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-22,adobo(cook=10) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-23,adobo(cook=9) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-24,adobo(cook=8) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-25,adobo(cook=7) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-26,adobo(cook=6) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-27,adobo(cook=5) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-28,adobo(cook=4) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-29,adobo(cook=3) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-30,adobo(cook=2) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-31,adobo(cook=1) ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,---
-32,empty ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,none ,adobo cooking ended. Cleaning stove. 
-33,empty ,karekare(cook=20)( Priority=5) tinola(cook=10)( Priority=10) ,adobo(prep=10) ,adobo is added to cooking state. Preheating stove. 
-34,tinola(cook=10) ,karekare(cook=20)( Priority=6) ,adobo(prep=9) ,Started Cooking tinola. 
-35,tinola(cook=9) ,karekare(cook=20)( Priority=6) ,adobo(prep=8) ,---
-36,tinola(cook=8) ,karekare(cook=20)( Priority=6) ,adobo(prep=7) ,---
-37,tinola(cook=7) ,karekare(cook=20)( Priority=6) ,adobo(prep=6) ,---
-38,tinola(cook=6) ,karekare(cook=20)( Priority=6) ,adobo(prep=5) ,---
-39,tinola(cook=5) ,karekare(cook=20)( Priority=6) ,adobo(prep=4) ,---
-40,tinola(cook=4) ,karekare(cook=20)( Priority=6) ,adobo(prep=3) ,---
-41,tinola(cook=3) ,karekare(cook=20)( Priority=6) ,adobo(prep=2) ,---
-42,tinola(cook=2) ,karekare(cook=20)( Priority=6) ,adobo(prep=1) ,---
-43,tinola(cook=1) ,karekare(cook=20)( Priority=6) adobo(cook=30)( Priority=3) ,none ,adobo is added to ready state. 
-44,empty ,karekare(cook=20)( Priority=6) adobo(cook=30)( Priority=3) ,none ,tinola cooking ended. Cleaning stove. 
-45,empty ,karekare(cook=20)( Priority=6) adobo(cook=30)( Priority=3) ,tinola(prep=10) ,tinola is added to cooking state. Preheating stove. 
-46,karekare(cook=20) ,adobo(cook=30)( Priority=4) ,tinola(prep=9) ,Started Cooking karekare. 
-47,karekare(cook=19) ,adobo(cook=30)( Priority=4) ,tinola(prep=8) ,---
-48,karekare(cook=18) ,adobo(cook=30)( Priority=4) ,tinola(prep=7) ,---
-49,karekare(cook=17) ,adobo(cook=30)( Priority=4) ,tinola(prep=6) ,---
-50,karekare(cook=16) ,adobo(cook=30)( Priority=4) ,tinola(prep=5) ,---
-51,karekare(cook=15) ,adobo(cook=30)( Priority=4) ,tinola(prep=4) ,---
-52,karekare(cook=14) ,adobo(cook=30)( Priority=4) ,tinola(prep=3) ,---
-53,karekare(cook=13) ,adobo(cook=30)( Priority=4) ,tinola(prep=2) ,---
-54,karekare(cook=12) ,adobo(cook=30)( Priority=4) ,tinola(prep=1) ,---
-55,karekare(cook=11) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,tinola is added to ready state. 
-56,karekare(cook=10) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-57,karekare(cook=9) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-58,karekare(cook=8) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-59,karekare(cook=7) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-60,karekare(cook=6) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-61,karekare(cook=5) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-62,karekare(cook=4) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-63,karekare(cook=3) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-64,karekare(cook=2) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-65,karekare(cook=1) ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,---
-66,empty ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,none ,karekare cooking ended. Cleaning stove. 
-67,empty ,adobo(cook=30)( Priority=4) tinola(cook=10)( Priority=10) ,karekare(prep=20) ,karekare is added to cooking state. Preheating stove. 
-68,tinola(cook=10) ,adobo(cook=30)( Priority=5) ,karekare(prep=19) ,Started Cooking tinola. 
-69,tinola(cook=9) ,adobo(cook=30)( Priority=5) ,karekare(prep=18) ,---
-70,tinola(cook=8) ,adobo(cook=30)( Priority=5) ,karekare(prep=17) ,---
-71,tinola(cook=7) ,adobo(cook=30)( Priority=5) ,karekare(prep=16) ,---
-72,tinola(cook=6) ,adobo(cook=30)( Priority=5) ,karekare(prep=15) ,---
-73,tinola(cook=5) ,adobo(cook=30)( Priority=5) ,karekare(prep=14) ,---
-74,tinola(cook=4) ,adobo(cook=30)( Priority=5) ,karekare(prep=13) ,---
-75,tinola(cook=3) ,adobo(cook=30)( Priority=5) ,karekare(prep=12) ,---
-76,tinola(cook=2) ,adobo(cook=30)( Priority=5) ,karekare(prep=11) ,---
-77,tinola(cook=1) ,adobo(cook=30)( Priority=5) ,karekare(prep=10) ,---
-78,empty ,adobo(cook=30)( Priority=5) ,karekare(prep=9) ,tinola cooking ended. Cleaning stove. 
-79,empty ,adobo(cook=30)( Priority=5) ,karekare(prep=8) tinola(prep=30) ,tinola is added to cooking state. Preheating stove. 
-80,adobo(cook=30) ,none ,karekare(prep=7) tinola(prep=29) ,Started Cooking adobo. 
-81,adobo(cook=29) ,none ,karekare(prep=6) tinola(prep=28) ,---
-82,adobo(cook=28) ,none ,karekare(prep=5) tinola(prep=27) ,---
-83,adobo(cook=27) ,none ,karekare(prep=4) tinola(prep=26) ,---
-84,adobo(cook=26) ,none ,karekare(prep=3) tinola(prep=25) ,---
-85,adobo(cook=25) ,none ,karekare(prep=2) tinola(prep=24) ,---
-86,adobo(cook=24) ,none ,karekare(prep=1) tinola(prep=23) ,---
-87,adobo(cook=23) ,karekare(cook=10)( Priority=5) ,tinola(prep=22) ,karekare is added to ready state. 
-88,adobo(cook=22) ,karekare(cook=10)( Priority=5) ,tinola(prep=21) ,---
-89,adobo(cook=21) ,karekare(cook=10)( Priority=5) ,tinola(prep=20) ,---
-90,adobo(cook=20) ,karekare(cook=10)( Priority=5) ,tinola(prep=19) ,---
-91,adobo(cook=19) ,karekare(cook=10)( Priority=5) ,tinola(prep=18) ,---
-92,adobo(cook=18) ,karekare(cook=10)( Priority=5) ,tinola(prep=17) ,---
-93,adobo(cook=17) ,karekare(cook=10)( Priority=5) ,tinola(prep=16) ,---
-94,adobo(cook=16) ,karekare(cook=10)( Priority=5) ,tinola(prep=15) ,---
-95,adobo(cook=15) ,karekare(cook=10)( Priority=5) ,tinola(prep=14) ,---
-96,adobo(cook=14) ,karekare(cook=10)( Priority=5) ,tinola(prep=13) ,---
-97,adobo(cook=13) ,karekare(cook=10)( Priority=5) ,tinola(prep=12) ,---
-98,adobo(cook=12) ,karekare(cook=10)( Priority=5) ,tinola(prep=11) ,---
-99,adobo(cook=11) ,karekare(cook=10)( Priority=5) ,tinola(prep=10) ,---
-100,adobo(cook=10) ,karekare(cook=10)( Priority=5) ,tinola(prep=9) ,---
-101,adobo(cook=9) ,karekare(cook=10)( Priority=5) ,tinola(prep=8) ,---
-102,adobo(cook=8) ,karekare(cook=10)( Priority=5) ,tinola(prep=7) ,---
-103,adobo(cook=7) ,karekare(cook=10)( Priority=5) ,tinola(prep=6) ,---
-104,adobo(cook=6) ,karekare(cook=10)( Priority=5) ,tinola(prep=5) ,---
-105,adobo(cook=5) ,karekare(cook=10)( Priority=5) ,tinola(prep=4) ,---
-106,adobo(cook=4) ,karekare(cook=10)( Priority=5) ,tinola(prep=3) ,---
-107,adobo(cook=3) ,karekare(cook=10)( Priority=5) ,tinola(prep=2) ,---
-108,adobo(cook=2) ,karekare(cook=10)( Priority=5) ,tinola(prep=1) ,---
-109,adobo(cook=1) ,karekare(cook=10)( Priority=5) ,none ,tinola finished.. 
-110,empty ,karekare(cook=10)( Priority=5) ,none ,adobo cooking ended. Cleaning stove. 
-111,empty ,karekare(cook=10)( Priority=5) ,adobo(prep=7) ,adobo is added to cooking state. Preheating stove. 
-112,karekare(cook=10) ,none ,adobo(prep=6) ,Started Cooking karekare. 
-113,karekare(cook=9) ,none ,adobo(prep=5) ,---
-114,karekare(cook=8) ,none ,adobo(prep=4) ,---
-115,karekare(cook=7) ,none ,adobo(prep=3) ,---
-116,karekare(cook=6) ,none ,adobo(prep=2) ,---
-117,karekare(cook=5) ,none ,adobo(prep=1) ,---
-118,karekare(cook=4) ,adobo(cook=10)( Priority=3) ,none ,adobo is added to ready state. 
-119,karekare(cook=3) ,adobo(cook=10)( Priority=3) ,none ,---
-120,karekare(cook=2) ,adobo(cook=10)( Priority=3) ,none ,---
-121,karekare(cook=1) ,adobo(cook=10)( Priority=3) ,none ,---
-122,empty ,adobo(cook=10)( Priority=3) ,none ,karekare cooking ended. Cleaning stove. 
-123,empty ,adobo(cook=10)( Priority=3) ,karekare(prep=20) ,karekare is added to cooking state. Preheating stove. 
-124,adobo(cook=10) ,none ,karekare(prep=19) ,Started Cooking adobo. 
-125,adobo(cook=9) ,none ,karekare(prep=18) ,---
-126,adobo(cook=8) ,none ,karekare(prep=17) ,---
-127,adobo(cook=7) ,none ,karekare(prep=16) ,---
-128,adobo(cook=6) ,none ,karekare(prep=15) ,---
-129,adobo(cook=5) ,none ,karekare(prep=14) ,---
-130,adobo(cook=4) ,none ,karekare(prep=13) ,---
-131,adobo(cook=3) ,none ,karekare(prep=12) ,---
-132,adobo(cook=2) ,none ,karekare(prep=11) ,---
-133,adobo(cook=1) ,none ,karekare(prep=10) ,---
-134,empty ,none ,karekare(prep=9) ,adobo cooking ended. adobo finished. Cleaning stove. 
-135,empty ,none ,karekare(prep=8) ,---
-136,empty ,none ,karekare(prep=7) ,---
-137,empty ,none ,karekare(prep=6) ,---
-138,empty ,none ,karekare(prep=5) ,---
-139,empty ,none ,karekare(prep=4) ,---
-140,empty ,none ,karekare(prep=3) ,---
-141,empty ,none ,karekare(prep=2) ,---
-142,empty ,none ,karekare(prep=1) ,---
-143,empty ,karekare(cook=20)( Priority=5) ,none ,karekare is added to ready state. Preheating stove. 
-144,karekare(cook=20) ,none ,none ,Started Cooking karekare. 
-145,karekare(cook=19) ,none ,none ,---
-146,karekare(cook=18) ,none ,none ,---
-147,karekare(cook=17) ,none ,none ,---
-148,karekare(cook=16) ,none ,none ,---
-149,karekare(cook=15) ,none ,none ,---
-150,karekare(cook=14) ,none ,none ,---
-151,karekare(cook=13) ,none ,none ,---
-152,karekare(cook=12) ,none ,none ,---
-153,karekare(cook=11) ,none ,none ,---
-154,karekare(cook=10) ,none ,none ,---
-155,karekare(cook=9) ,none ,none ,---
-156,karekare(cook=8) ,none ,none ,---
-157,karekare(cook=7) ,none ,none ,---
-158,karekare(cook=6) ,none ,none ,---
-159,karekare(cook=5) ,none ,none ,---
-160,karekare(cook=4) ,none ,none ,---
-161,karekare(cook=3) ,none ,none ,---
-162,karekare(cook=2) ,none ,none ,---
-163,karekare(cook=1) ,none ,none ,---
-164,empty ,none ,none ,karekare cooking ended. karekare finished. Cleaning stove. 
+1,empty ,adobo(cook=10) tinola(cook=10) karekare(cook=10) ,none ,adobo is added to ready state. tinola is added to ready state. karekare is added to ready state. Preheating stove. 
+2,adobo(cook=10) ,tinola(cook=10) karekare(cook=10) ,none ,Started Cooking adobo. 
+3,adobo(cook=9) ,tinola(cook=10) karekare(cook=10) ,none ,---
+4,adobo(cook=8) ,tinola(cook=10) karekare(cook=10) ,none ,---
+5,adobo(cook=7) ,tinola(cook=10) karekare(cook=10) ,none ,---
+6,adobo(cook=6) ,tinola(cook=10) karekare(cook=10) ,none ,---
+7,adobo(cook=5) ,tinola(cook=10) karekare(cook=10) ,none ,---
+8,adobo(cook=4) ,tinola(cook=10) karekare(cook=10) ,none ,---
+9,adobo(cook=3) ,tinola(cook=10) karekare(cook=10) ,none ,---
+10,adobo(cook=2) ,tinola(cook=10) karekare(cook=10) ,none ,---
+11,adobo(cook=1) ,tinola(cook=10) karekare(cook=10) ,none ,---
+12,empty ,tinola(cook=10) karekare(cook=10) ,none ,adobo cooking ended. Cleaning stove. 
+13,empty ,tinola(cook=10) karekare(cook=10) ,adobo(prep=10) ,adobo is added to cooking state. Preheating stove. 
+14,tinola(cook=10) ,karekare(cook=10) ,adobo(prep=9) ,Started Cooking tinola. 
+15,tinola(cook=9) ,karekare(cook=10) ,adobo(prep=8) ,---
+16,tinola(cook=8) ,karekare(cook=10) ,adobo(prep=7) ,---
+17,tinola(cook=7) ,karekare(cook=10) ,adobo(prep=6) ,---
+18,tinola(cook=6) ,karekare(cook=10) ,adobo(prep=5) ,---
+19,tinola(cook=5) ,karekare(cook=10) ,adobo(prep=4) ,---
+20,tinola(cook=4) ,karekare(cook=10) ,adobo(prep=3) ,---
+21,tinola(cook=3) ,karekare(cook=10) ,adobo(prep=2) ,---
+22,tinola(cook=2) ,karekare(cook=10) ,adobo(prep=1) ,---
+23,tinola(cook=1) ,karekare(cook=10) adobo(cook=10) ,none ,adobo is added to ready state. 
+24,empty ,karekare(cook=10) adobo(cook=10) ,none ,tinola cooking ended. Cleaning stove. 
+25,empty ,karekare(cook=10) adobo(cook=10) ,tinola(prep=10) ,tinola is added to cooking state. Preheating stove. 
+26,karekare(cook=10) ,adobo(cook=10) ,tinola(prep=9) ,Started Cooking karekare. 
+27,karekare(cook=9) ,adobo(cook=10) ,tinola(prep=8) ,---
+28,karekare(cook=8) ,adobo(cook=10) ,tinola(prep=7) ,---
+29,karekare(cook=7) ,adobo(cook=10) ,tinola(prep=6) ,---
+30,karekare(cook=6) ,adobo(cook=10) ,tinola(prep=5) ,---
+31,karekare(cook=5) ,adobo(cook=10) ,tinola(prep=4) ,---
+32,karekare(cook=4) ,adobo(cook=10) ,tinola(prep=3) ,---
+33,karekare(cook=3) ,adobo(cook=10) ,tinola(prep=2) ,---
+34,karekare(cook=2) ,adobo(cook=10) ,tinola(prep=1) ,---
+35,karekare(cook=1) ,adobo(cook=10) tinola(cook=10) ,none ,tinola is added to ready state. 
+36,empty ,adobo(cook=10) tinola(cook=10) ,none ,karekare cooking ended. Cleaning stove. 
+37,empty ,adobo(cook=10) tinola(cook=10) ,karekare(prep=10) ,karekare is added to cooking state. Preheating stove. 
+38,adobo(cook=10) ,tinola(cook=10) ,karekare(prep=9) ,Started Cooking adobo. 
+39,adobo(cook=9) ,tinola(cook=10) ,karekare(prep=8) ,---
+40,adobo(cook=8) ,tinola(cook=10) ,karekare(prep=7) ,---
+41,adobo(cook=7) ,tinola(cook=10) ,karekare(prep=6) ,---
+42,adobo(cook=6) ,tinola(cook=10) ,karekare(prep=5) ,---
+43,adobo(cook=5) ,tinola(cook=10) ,karekare(prep=4) ,---
+44,adobo(cook=4) ,tinola(cook=10) ,karekare(prep=3) ,---
+45,adobo(cook=3) ,tinola(cook=10) ,karekare(prep=2) ,---
+46,adobo(cook=2) ,tinola(cook=10) ,karekare(prep=1) ,---
+47,adobo(cook=1) ,tinola(cook=10) karekare(cook=10) ,none ,karekare is added to ready state. 
+48,empty ,tinola(cook=10) karekare(cook=10) ,none ,adobo cooking ended. Cleaning stove. 
+49,empty ,tinola(cook=10) karekare(cook=10) ,adobo(prep=10) ,adobo is added to cooking state. Preheating stove. 
+50,tinola(cook=10) ,karekare(cook=10) ,adobo(prep=9) ,Started Cooking tinola. 
+51,tinola(cook=9) ,karekare(cook=10) ,adobo(prep=8) ,---
+52,tinola(cook=8) ,karekare(cook=10) ,adobo(prep=7) ,---
+53,tinola(cook=7) ,karekare(cook=10) ,adobo(prep=6) ,---
+54,tinola(cook=6) ,karekare(cook=10) ,adobo(prep=5) ,---
+55,tinola(cook=5) ,karekare(cook=10) ,adobo(prep=4) ,---
+56,tinola(cook=4) ,karekare(cook=10) ,adobo(prep=3) ,---
+57,tinola(cook=3) ,karekare(cook=10) ,adobo(prep=2) ,---
+58,tinola(cook=2) ,karekare(cook=10) ,adobo(prep=1) ,---
+59,tinola(cook=1) ,karekare(cook=10) adobo(cook=10) ,none ,adobo is added to ready state. 
+60,empty ,karekare(cook=10) adobo(cook=10) ,none ,tinola cooking ended. Cleaning stove. 
+61,empty ,karekare(cook=10) adobo(cook=10) ,tinola(prep=10) ,tinola is added to cooking state. Preheating stove. 
+62,karekare(cook=10) ,adobo(cook=10) ,tinola(prep=9) ,Started Cooking karekare. 
+63,karekare(cook=9) ,adobo(cook=10) ,tinola(prep=8) ,---
+64,karekare(cook=8) ,adobo(cook=10) ,tinola(prep=7) ,---
+65,karekare(cook=7) ,adobo(cook=10) ,tinola(prep=6) ,---
+66,karekare(cook=6) ,adobo(cook=10) ,tinola(prep=5) ,---
+67,karekare(cook=5) ,adobo(cook=10) ,tinola(prep=4) ,---
+68,karekare(cook=4) ,adobo(cook=10) ,tinola(prep=3) ,---
+69,karekare(cook=3) ,adobo(cook=10) ,tinola(prep=2) ,---
+70,karekare(cook=2) ,adobo(cook=10) ,tinola(prep=1) ,---
+71,karekare(cook=1) ,adobo(cook=10) tinola(cook=10) ,none ,tinola is added to ready state. 
+72,empty ,adobo(cook=10) tinola(cook=10) ,none ,karekare cooking ended. Cleaning stove. 
+73,empty ,adobo(cook=10) tinola(cook=10) ,karekare(prep=10) ,karekare is added to cooking state. Preheating stove. 
+74,adobo(cook=10) ,tinola(cook=10) ,karekare(prep=9) ,Started Cooking adobo. 
+75,adobo(cook=9) ,tinola(cook=10) ,karekare(prep=8) ,---
+76,adobo(cook=8) ,tinola(cook=10) ,karekare(prep=7) ,---
+77,adobo(cook=7) ,tinola(cook=10) ,karekare(prep=6) ,---
+78,adobo(cook=6) ,tinola(cook=10) ,karekare(prep=5) ,---
+79,adobo(cook=5) ,tinola(cook=10) ,karekare(prep=4) ,---
+80,adobo(cook=4) ,tinola(cook=10) ,karekare(prep=3) ,---
+81,adobo(cook=3) ,tinola(cook=10) ,karekare(prep=2) ,---
+82,adobo(cook=2) ,tinola(cook=10) ,karekare(prep=1) ,---
+83,adobo(cook=1) ,tinola(cook=10) karekare(cook=10) ,none ,karekare is added to ready state. 
+84,empty ,tinola(cook=10) karekare(cook=10) ,none ,adobo cooking ended. Cleaning stove. 
+85,empty ,tinola(cook=10) karekare(cook=10) ,adobo(prep=10) ,adobo is added to cooking state. Preheating stove. 
+86,tinola(cook=10) ,karekare(cook=10) ,adobo(prep=9) ,Started Cooking tinola. 
+87,tinola(cook=9) ,karekare(cook=10) ,adobo(prep=8) ,---
+88,tinola(cook=8) ,karekare(cook=10) ,adobo(prep=7) ,---
+89,tinola(cook=7) ,karekare(cook=10) ,adobo(prep=6) ,---
+90,tinola(cook=6) ,karekare(cook=10) ,adobo(prep=5) ,---
+91,tinola(cook=5) ,karekare(cook=10) ,adobo(prep=4) ,---
+92,tinola(cook=4) ,karekare(cook=10) ,adobo(prep=3) ,---
+93,tinola(cook=3) ,karekare(cook=10) ,adobo(prep=2) ,---
+94,tinola(cook=2) ,karekare(cook=10) ,adobo(prep=1) ,---
+95,tinola(cook=1) ,karekare(cook=10) adobo(cook=10) ,none ,adobo is added to ready state. 
+96,empty ,karekare(cook=10) adobo(cook=10) ,none ,tinola cooking ended. Cleaning stove. 
+97,empty ,karekare(cook=10) adobo(cook=10) ,tinola(prep=10) ,tinola is added to cooking state. Preheating stove. 
+98,karekare(cook=10) ,adobo(cook=10) ,tinola(prep=9) ,Started Cooking karekare. 
+99,karekare(cook=9) ,adobo(cook=10) ,tinola(prep=8) ,---
+100,karekare(cook=8) ,adobo(cook=10) ,tinola(prep=7) ,---
+101,karekare(cook=7) ,adobo(cook=10) ,tinola(prep=6) ,---
+102,karekare(cook=6) ,adobo(cook=10) ,tinola(prep=5) ,---
+103,karekare(cook=5) ,adobo(cook=10) ,tinola(prep=4) ,---
+104,karekare(cook=4) ,adobo(cook=10) ,tinola(prep=3) ,---
+105,karekare(cook=3) ,adobo(cook=10) ,tinola(prep=2) ,---
+106,karekare(cook=2) ,adobo(cook=10) ,tinola(prep=1) ,---
+107,karekare(cook=1) ,adobo(cook=10) tinola(cook=10) ,none ,tinola is added to ready state. 
+108,empty ,adobo(cook=10) tinola(cook=10) ,none ,karekare cooking ended. Cleaning stove. 
+109,empty ,adobo(cook=10) tinola(cook=10) ,karekare(prep=10) ,karekare is added to cooking state. Preheating stove. 
+110,adobo(cook=10) ,tinola(cook=10) ,karekare(prep=9) ,Started Cooking adobo. 
+111,adobo(cook=9) ,tinola(cook=10) ,karekare(prep=8) ,---
+112,adobo(cook=8) ,tinola(cook=10) ,karekare(prep=7) ,---
+113,adobo(cook=7) ,tinola(cook=10) ,karekare(prep=6) ,---
+114,adobo(cook=6) ,tinola(cook=10) ,karekare(prep=5) ,---
+115,adobo(cook=5) ,tinola(cook=10) ,karekare(prep=4) ,---
+116,adobo(cook=4) ,tinola(cook=10) ,karekare(prep=3) ,---
+117,adobo(cook=3) ,tinola(cook=10) ,karekare(prep=2) ,---
+118,adobo(cook=2) ,tinola(cook=10) ,karekare(prep=1) ,---
+119,adobo(cook=1) ,tinola(cook=10) karekare(cook=10) ,none ,karekare is added to ready state. 
+120,empty ,tinola(cook=10) karekare(cook=10) ,none ,adobo cooking ended. Cleaning stove. 
+121,empty ,tinola(cook=10) karekare(cook=10) ,adobo(prep=10) ,adobo is added to cooking state. Preheating stove. 
+122,tinola(cook=10) ,karekare(cook=10) ,adobo(prep=9) ,Started Cooking tinola. 
+123,tinola(cook=9) ,karekare(cook=10) ,adobo(prep=8) ,---
+124,tinola(cook=8) ,karekare(cook=10) ,adobo(prep=7) ,---
+125,tinola(cook=7) ,karekare(cook=10) ,adobo(prep=6) ,---
+126,tinola(cook=6) ,karekare(cook=10) ,adobo(prep=5) ,---
+127,tinola(cook=5) ,karekare(cook=10) ,adobo(prep=4) ,---
+128,tinola(cook=4) ,karekare(cook=10) ,adobo(prep=3) ,---
+129,tinola(cook=3) ,karekare(cook=10) ,adobo(prep=2) ,---
+130,tinola(cook=2) ,karekare(cook=10) ,adobo(prep=1) ,---
+131,tinola(cook=1) ,karekare(cook=10) ,none ,adobo finished.. 
+132,empty ,karekare(cook=10) ,none ,tinola cooking ended. Cleaning stove. 
+133,empty ,karekare(cook=10) ,tinola(prep=10) ,tinola is added to cooking state. Preheating stove. 
+134,karekare(cook=10) ,none ,tinola(prep=9) ,Started Cooking karekare. 
+135,karekare(cook=9) ,none ,tinola(prep=8) ,---
+136,karekare(cook=8) ,none ,tinola(prep=7) ,---
+137,karekare(cook=7) ,none ,tinola(prep=6) ,---
+138,karekare(cook=6) ,none ,tinola(prep=5) ,---
+139,karekare(cook=5) ,none ,tinola(prep=4) ,---
+140,karekare(cook=4) ,none ,tinola(prep=3) ,---
+141,karekare(cook=3) ,none ,tinola(prep=2) ,---
+142,karekare(cook=2) ,none ,tinola(prep=1) ,---
+143,karekare(cook=1) ,none ,none ,tinola finished.. 
+144,empty ,none ,none ,karekare cooking ended. Cleaning stove. 
+145,empty ,none ,karekare(prep=10) ,karekare is added to cooking state. 
+146,empty ,none ,karekare(prep=9) ,---
+147,empty ,none ,karekare(prep=8) ,---
+148,empty ,none ,karekare(prep=7) ,---
+149,empty ,none ,karekare(prep=6) ,---
+150,empty ,none ,karekare(prep=5) ,---
+151,empty ,none ,karekare(prep=4) ,---
+152,empty ,none ,karekare(prep=3) ,---
+153,empty ,none ,karekare(prep=2) ,---
+154,empty ,none ,karekare(prep=1) ,---
+155,empty ,none ,none ,karekare finished.. 

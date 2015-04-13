@@ -1,3 +1,3 @@
 adobo 1
-tinola 5
-karekare 8
+tinola 1
+karekare 1
