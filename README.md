@@ -3,13 +3,18 @@
 
 ### Progress So Far: 
 
+Arc 10
+---
++ Fixed Command Prompt Error Message: GenRR TQ Input
++ Changed Test Cases (back to sir's)
+
 Arc 9
 ---
-Please fix output.csv command prompt error message
-Finalize Documentation
-Prepare Paper and Time Complexity
-Review and Use more Test Cases
-MULTIQUEUE
++ Please fix output.csv command prompt error message
++ Finalize Documentation
++ Prepare Paper and Time Complexity
++ Review and Use more Test Cases
++ MULTIQUEUE
 
 Arc 8
 ---
