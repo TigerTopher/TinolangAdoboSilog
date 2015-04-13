@@ -7,6 +7,7 @@
 from Tkinter import * 		# For python version 2.7 only. Built-in GUI Module.
 import copy					# For copy.deepcopy function - makes self.dishWaiting list uneditable by functions
 import os 					# For os.system()
+import tkMessageBox			# For message box
 
 class Stove():
 	def __init__(self):
@@ -1173,7 +1174,7 @@ class Iron_Chef():
 class GUI:
 	def __init__(self):
 		self.root = Tk()
-		self.root.geometry("270x420")
+		self.root.geometry("300x420")
 		self.root.config(bg="LIGHTCYAN2")
 		self.root.resizable(width=FALSE, height=FALSE)
 		self.root.title("Iron Chef v1.03")
@@ -1190,8 +1191,15 @@ class GUI:
 		os.system("output.csv")
 
 	def ButtonGenRR(self):
-		self.chefInstance.GenRR(int(self.TQEntry.get()))
-		os.system("output.csv")
+		if(len(self.TQEntry.get()) == 0):
+			tkMessageBox.showerror(title="Input Error", message="Input not found")
+
+		elif(int(self.TQEntry.get()) < 0):
+			tkMessageBox.showerror(title="Input Error", message="Please enter a non-negative TQ")
+
+		else:
+			self.chefInstance.GenRR(int(self.TQEntry.get()))
+			os.system("output.csv")
 		
 	def ButtonSJF1(self):
 		self.chefInstance.SJF1()
@@ -1232,7 +1240,7 @@ class GUI:
 		GenRR = Button(GerRREntryFrame, text="Generalized Round Robin", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonGenRR())
 		GenRR.pack(pady=5, padx=5, fill=X, side=LEFT)
 
-		self.TQEntry = Entry(GerRREntryFrame, width=4, justify=CENTER, relief=FLAT, font=("Consolas", 11))
+		self.TQEntry = Entry(GerRREntryFrame, width=6, justify=CENTER, relief=FLAT, font=("Consolas", 11))
 		self.TQEntry.pack(side=LEFT, pady=5, padx=5, fill=X,)
 		self.TQEntry.focus_set()
 
@@ -1243,7 +1251,6 @@ class GUI:
 
 		SJF2 = Button(MainFrame, text="Shortest Job First (w/ Preemption)", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonSJF2())
 		SJF2.pack(pady=5, padx=5, fill=X)
-
 
 		Prio = Button(MainFrame, text="Priority With Aging", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonPrio())
 		Prio.pack(pady=5, padx=5, fill=X)
