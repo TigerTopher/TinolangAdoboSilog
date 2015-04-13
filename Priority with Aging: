@@ -1,5 +1,0 @@
-Priority with Aging without Preemption:
-
-For selection, choose the want with highest priority.
-
-All of those that were not selected will have their priority increased by 1.
