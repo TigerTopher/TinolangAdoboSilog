@@ -190,7 +190,7 @@ class Scheduler():
 		# Printing the Ready 2 Queue
 		if (self.ready2 != []):
 			for x in self.ready2:
-				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ")( Place=" + str(x[4]) + ")")
 		else:
 			filePointer.write("none ")
 		filePointer.write(",")
@@ -198,7 +198,7 @@ class Scheduler():
 		# Printing the Ready 3 Queue
 		if (self.ready3 != []):
 			for x in self.ready3:
-				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ")( Place=" + str(x[4]) + ")")
 		else:
 			filePointer.write("none ")
 		filePointer.write(",")
