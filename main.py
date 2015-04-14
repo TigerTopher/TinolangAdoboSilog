@@ -182,7 +182,7 @@ class Scheduler():
 		# Printing the Ready 1 Queue
 		if (self.ready1 != []):
 			for x in self.ready1:
-				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ")( Place=" + str(x[4]) + ")")
 		else:
 			filePointer.write("none ")
 		filePointer.write(",")
@@ -1206,10 +1206,10 @@ class Scheduler():
 											self.ready1.append(temp)
 											self.remarks.append(temp[0]+" is added to ready state for Priority with aging")
 										if(temp[4] == 1):
-											self.ready1.append(temp)
+											self.ready2.append(temp)
 											self.remarks.append(temp[0]+" is added to ready state for Shortest Job First")
 										if(temp[4] == 2):
-											self.ready1.append(temp)
+											self.ready3.append(temp)
 											self.remarks.append(temp[0]+" is added to ready state for First Come, First Serve")
 									elif(temp[1] == "prep"):
 										temp[2] = temp[2] + 1
