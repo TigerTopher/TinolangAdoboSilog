@@ -1178,7 +1178,6 @@ class Scheduler():
 					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
 					if self.preparing[x][2] == 0:
 						xTemp = self.preparing.pop(x)
-						print xTemp
 						nameToMatch = (xTemp)[0]
 						place = (xTemp)[4]
 
@@ -1199,7 +1198,6 @@ class Scheduler():
 									temp.append(self.dishWaiting[y].getPriority())
 									place = place + 1
 									temp.append(place)
-									print "Ang temp ay:", temp
 
 									if(temp[1] == "cook"):						#Go to ready state
 										if(temp[4] == 0):
