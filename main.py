@@ -196,7 +196,7 @@ class Scheduler():
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
-							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
@@ -237,6 +237,7 @@ class Scheduler():
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
 										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
@@ -356,7 +357,7 @@ class Scheduler():
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
-							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
@@ -397,6 +398,7 @@ class Scheduler():
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
 										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 						
@@ -536,7 +538,7 @@ class Scheduler():
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
-							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
@@ -577,6 +579,7 @@ class Scheduler():
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
 										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
@@ -704,7 +707,7 @@ class Scheduler():
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
-							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
@@ -745,6 +748,7 @@ class Scheduler():
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
 										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
@@ -902,7 +906,7 @@ class Scheduler():
 							self.remarks.append(temp[0]+" is added to ready state")
 
 						elif(temp[1] == "prep"):
-							temp[2] == temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
 						
@@ -946,6 +950,7 @@ class Scheduler():
 										self.ready.append(temp)
 										self.remarks.append(temp[0]+" is added to ready state")
 									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
 										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
 										self.remarks.append(temp[0]+" is added to preparation")
 								break
