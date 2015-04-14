@@ -83,6 +83,11 @@ class Scheduler():
 		self.temporary = []
 		self.remarks = []
 
+		# For Multiqueue
+		self.ready1 = []	# Ready ng Priority with Aging
+		self.ready2 = []	# Ready ng SJF
+		self.ready3 = []	# Ready ng FCFS
+
 	def printStatus(self):
 
 		for x in range(0, len(self.remarks)):
@@ -141,6 +146,58 @@ class Scheduler():
 		# Printing the Ready Queue
 		if (self.ready != []):
 			for x in self.ready:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Assistants Queue
+		if (self.preparing != []):
+			for x in self.preparing:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ") ")
+			
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Remarks
+		if (self.remarks != []):
+			for x in self.remarks:
+				filePointer.write(x + ". ")
+		else:
+			filePointer.write("---")
+
+		filePointer.write("\n")
+
+	def printToFileMulti(self, filePointer):
+		filePointer.write(str(self.time) + ",")
+
+		# Printing the Stove's Current
+		if (self.ourStove.current != []):
+			filePointer.write(self.ourStove.current[0][0] + "(" + self.ourStove.current[0][1] + "=" + str(self.ourStove.current[0][2]) + ")")
+		else:
+			filePointer.write("empty")
+		filePointer.write(" ,")
+
+		# Printing the Ready 1 Queue
+		if (self.ready1 != []):
+			for x in self.ready1:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Ready 2 Queue
+		if (self.ready2 != []):
+			for x in self.ready2:
+				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
+		else:
+			filePointer.write("none ")
+		filePointer.write(",")
+
+		# Printing the Ready 3 Queue
+		if (self.ready3 != []):
+			for x in self.ready3:
 				filePointer.write(x[0] + "(" + x[1] + "=" + str(x[2]) + ")( Priority="+ str(x[3]) + ") ")
 		else:
 			filePointer.write("none ")
@@ -1052,7 +1109,255 @@ class Scheduler():
 		f.close()
 
 	def Multi(self):					# Multiqueue
-		pass
+
+		#The temporary variable would now hold the following: 0 name, 1 instruction, 2 time, 3 priority, 4 - This would
+		#Know where you are from...
+		#0 -> Kakaarrive lang
+		#1 -> Galing Priority Queue
+		#2 -> Galing SJF
+
+		self.time = 0
+		# Open the file with append mode
+		f = open("output.csv", "w")
+		f.write("Time, Stove, Priority with Aging, SJF, First Come First Serve, Assistants, Remarks\n")
+
+		while( (self.ourStove.isOccupied == True) or (self.ready1 != []) or (self.ready2 != []) or (self.ready3 != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
+			self.remarks = []
+			self.time = self.time + 1
+
+			# 1. Check all the dishes in dishWaiting. 
+			# Check arriving
+			# Put 0 in temp[4]
+
+			for i in range(0, len(self.dishWaiting)):
+
+				# Check if there is an upcoming dish by matching the time of arrival with the current time.
+
+				if (self.dishWaiting[i].getTime() == self.time) :
+					
+					#If it matches, assign the incoming dish: whether it goes to the preparation or to the ready state. (SEE INSTRUCTION)
+					if(self.dishWaiting[i].showQueue != []):			#Check if there is an instruction
+
+						# Messed up yung code, could be more efficient. Ayusin ko mamaya.
+
+						temp = self.dishWaiting[i].dequeue()			#Temp is a list which holds our instruction
+						temp.insert(0, self.dishWaiting[i].getName())	#Added the name
+						temp.append(self.dishWaiting[i].getPriority())	#This will serve as current priority, the one prone to aging
+						temp.append(0)									#
+
+						# The last five lines were just for formatting. Temp contains the dish name, instruction, and time count
+
+						if(temp[1] == "cook"):						#Go to ready state
+							if(temp[4] == 0):
+								self.ready1.append(temp)
+								self.remarks.append(temp[0]+" is added to ready state for Priority with aging")
+							if(temp[4] == 1):
+								self.ready1.append(temp)
+								self.remarks.append(temp[0]+" is added to ready state for Shortest Job First")
+							if(temp[4] == 2):
+								self.ready1.append(temp)
+								self.remarks.append(temp[0]+" is added to ready state for First Come, First Serve")
+
+						elif(temp[1] == "prep"):
+							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
+							self.preparing.append(temp)
+							self.remarks.append(temp[0]+" is added to preparing")
+
+			#2. PREPARATION
+
+			#a. Check if preparation is not empty
+
+			if(self.preparing != []):
+
+				#b. If not, iterate through the list, and subtract 1 in preparation timer.
+				x = 0
+
+				while( x < len(self.preparing)):
+					self.preparing[x][2] = int(self.preparing[x][2]) - 1
+
+					#-> If the current time is zero, pop its current instruction. Now check whether there is still an instruction.
+					if self.preparing[x][2] == 0:
+						xTemp = self.preparing.pop(x)
+						print xTemp
+						nameToMatch = (xTemp)[0]
+						place = (xTemp)[4]
+
+						# You have the name at temp[0] so you need to match this with dishWaiting para macheck kung may instructions pa
+						# If there is, (transfer it to the ready state -if cooking yung next state)
+
+						for y in range(0, len(self.dishWaiting)):
+							# This asks kung saan yun at kung may kasunod pa na instruction...
+
+							if( (self.dishWaiting[y].getName() == nameToMatch)):
+								if self.dishWaiting[y].showQueue() == []:
+									self.remarks.append(self.dishWaiting[y].getName() +" finished.")
+									self.dishWaiting.pop(y)
+
+								else:
+									temp = self.dishWaiting[y].dequeue()
+									temp.insert(0, self.dishWaiting[y].getName())
+									temp.append(self.dishWaiting[y].getPriority())
+									place = place + 1
+									temp.append(place)
+									print "Ang temp ay:", temp
+
+									if(temp[1] == "cook"):						#Go to ready state
+										if(temp[4] == 0):
+											self.ready1.append(temp)
+											self.remarks.append(temp[0]+" is added to ready state for Priority with aging")
+										if(temp[4] == 1):
+											self.ready1.append(temp)
+											self.remarks.append(temp[0]+" is added to ready state for Shortest Job First")
+										if(temp[4] == 2):
+											self.ready1.append(temp)
+											self.remarks.append(temp[0]+" is added to ready state for First Come, First Serve")
+									elif(temp[1] == "prep"):
+										temp[2] = temp[2] + 1
+										self.preparing.append(temp)				# No need to add 1 since no more deduction from preparation to be done
+										self.remarks.append(temp[0]+" is added to preparation")
+								break
+						x = x - 1
+					x = x + 1
+
+			# COOKING
+
+			if(self.temporary != []):
+				#get name then match in dish waiting
+				nameToMatch = self.temporary[0][0]
+				prio = self.temporary[0][3]
+				place = self.temporary[0][4]
+
+				self.temporary.pop(0)
+
+				#Assign
+				for y in range(0, len(self.dishWaiting)):
+					if(self.dishWaiting[y].getName() == nameToMatch):
+						name = self.dishWaiting[y].getName()
+						if self.dishWaiting[y].showQueue() == []:
+							self.dishWaiting.pop(y)
+							self.remarks.append(name+" finished")
+
+						else:
+							temp = self.dishWaiting[y].dequeue()
+							temp.insert(0,self.dishWaiting[y].getName())
+							temp.append(prio)
+							temp.append(place)								
+
+							if(temp[1] == "cook"):						#Go to ready state
+								if(temp[4] == 0):
+									self.ready1.append(temp)
+									self.remarks.append(temp[0]+" is added to ready state for Priority with aging")
+								if(temp[4] == 1):
+									self.ready1.append(temp)
+									self.remarks.append(temp[0]+" is added to ready state for Shortest Job First")
+								if(temp[4] == 2):
+									self.ready1.append(temp)
+									self.remarks.append(temp[0]+" is added to ready state for First Come, First Serve")
+
+							elif(temp[1] == "prep"):
+								self.preparing.append( temp)
+								self.remarks.append(temp[0]+" is added to cooking state")
+
+						break
+
+			if(self.ourStove.isOccupied() == True):						#Occupied
+				self.ourStove.decrTime()
+				if ( self.ourStove.getTime() == 0):
+					self.remarks.append(self.ourStove.getName() + " cooking ended")
+					returned = self.ourStove.remove()
+					#Check if there is still an instruction
+					nameToFind = returned[0]
+					match = 0
+
+					for y in range(0, len(self.dishWaiting)):
+						if( self.dishWaiting[y].getName() == nameToFind):
+							if self.dishWaiting[y].showQueue() == []:
+								name = self.dishWaiting[y].getName()
+								self.dishWaiting.pop(y)
+								self.remarks.append(name +" finished")
+							else:
+								match = 1
+
+							break
+
+					if(match == 1):
+						self.temporary.append(returned)
+
+
+			if(self.ourStove.isOccupied() == False):	#Empty
+
+				if(self.ourStove.isClean() == False):	#Kung hindi siya clean.Edi
+					self.ourStove.clean()
+					self.remarks.append("Cleaning stove")
+						
+				else:								#Kung clean siya
+					
+					# 0 -
+					if(self.ready1 != []):
+						if(self.ourStove.isHot() == True):
+							# newToCook = self.ready.pop(0)
+							
+							highPrio = 0		#Something big...
+							location = 0
+
+							for x in range(0,len(self.ready)):
+								if self.ready1[x][3] > highPrio:
+									location = x
+									highPrio = self.ready1[x][3]
+
+							newToCook = self.ready1.pop(location)
+
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+
+							# AGE
+							for x in range(0,len(self.ready1)):
+								self.ready1[x][3] = self.ready1[x][3] + 1
+
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+					elif(self.ready2 != []):
+						if(self.ourStove.isHot() == True):
+							# newToCook = self.ready.pop(0)
+							
+							short = 9999999999		#Something big...
+							location = 0
+
+
+							for x in range(0,len(self.ready2)):
+								if self.ready2[x][2] < short:
+									location = x
+									short = self.ready2[x][2]
+
+							newToCook = self.ready2.pop(location)
+
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+
+
+					elif(self.ready3 != []):
+						if(self.ourStove.isHot() == True):
+							newToCook = self.ready3.pop(0)
+							self.ourStove.cook(newToCook)		#This already sets it to occupied
+							self.remarks.append("Started Cooking " + newToCook[0])
+						else:
+							self.ourStove.preheat()
+							self.remarks.append("Preheating stove")
+			# PRINTING IS HERE
+			# self.printStatus()
+
+			# Print to file
+			self.printToFileMulti(f)
+
+		# Close the file	
+		f.close()
+
+
 		
 class Dish():
 	def __init__(self):
@@ -1187,13 +1492,23 @@ class GUI:
 		self.chefInstance = Iron_Chef()
 		self.chefInstance.start()
 
+	def openCSVfile(self):
+		try: # If the OS is Windows
+			os.system("output.csv")
+		except:
+			pass
+		try: # If the OS is Linux
+			os.system("libreoffice output.csv")
+		except:
+			pass		
+
 	def ButtonFCFS(self):
 		self.chefInstance.FCFS()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def ButtonRRTQ3(self):
 		self.chefInstance.RRTQ3()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def ButtonGenRR(self):
 		if(len(self.TQEntry.get()) == 0):
@@ -1204,23 +1519,23 @@ class GUI:
 
 		else:
 			self.chefInstance.GenRR(int(self.TQEntry.get()))
-			os.system("output.csv")
+			self.openCSVfile()
 		
 	def ButtonSJF1(self):
 		self.chefInstance.SJF1()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def ButtonSJF2(self):
 		self.chefInstance.SJF2()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def ButtonPrio(self):
 		self.chefInstance.Prio()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def ButtonMulti(self):
 		self.chefInstance.Multi()
-		os.system("output.csv")
+		self.openCSVfile()
 
 	def show(self):
 		# Upper border
