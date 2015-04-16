@@ -88,6 +88,17 @@ class Scheduler():
 		self.ready2 = []	# Ready ng SJF
 		self.ready3 = []	# Ready ng FCFS
 
+		# For Metrics
+		self.totalCook = 0
+		self.totalWeight = 0
+		self.sumWaitPrio = 0
+
+	def printMetric(self, filePointer):
+
+		filePointer.write("\n1) Total Time: " + str(self.time))
+		filePointer.write("\n2) Stove Utilization:  %0.02f" % (float(self.totalCook)/float(self.time)*100) + "%")
+		filePointer.write("\n3) Weighted Average Waiting Time: %0.02f" % (float(self.sumWaitPrio)/float(self.totalWeight)))
+
 	def printStatus(self):
 
 		for x in range(0, len(self.remarks)):
@@ -223,9 +234,13 @@ class Scheduler():
 
 	def FCFS(self):						# First come, First serve
 		self.time = 0
-		# Open the file with append mode
+
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -256,8 +271,6 @@ class Scheduler():
 							temp[2] = temp[2] + 1 				# We added this +1 because it will be subtracted in the preparation...
 							self.preparing.append(temp)
 							self.remarks.append(temp[0]+" is added to preparing")						
-						
-
 			
 			#2. PREPARATION
 
@@ -331,6 +344,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -346,7 +363,6 @@ class Scheduler():
 								self.remarks.append(name +" finished")
 							else:
 								match = 1
-
 							break
 
 					if(match == 1):
@@ -369,11 +385,23 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queue
+			for dish in self.ready:
+				# Find the name of dish in dishWaiting
+				for i in self.dishWaiting:
+					if (i.getName() == dish[0]):
+						# Get the priority and add to the Summation of Waiting Time x Priority
+						self.sumWaitPrio = self.sumWaitPrio + i.getPriority()
+						break
+
 			# PRINTING IS HERE
 			# self.printStatus()
 
 			# Print to file
 			self.printToFile(f)
+
+		self.printMetric(f)
 
 		# Close the file	
 		f.close()
@@ -386,6 +414,10 @@ class Scheduler():
 		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -500,6 +532,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				self.ourStove.TQ = self.ourStove.TQ + 1
 
 				if ( self.ourStove.getTime() == 0):
@@ -552,6 +588,15 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queue
+			for dish in self.ready:
+				# Find the name of dish in dishWaiting
+				for i in self.dishWaiting:
+					if (i.getName() == dish[0]):
+						# Get the priority and add to the Summation of Waiting Time x Priority
+						self.sumWaitPrio = self.sumWaitPrio + i.getPriority()
+						break
 
 
 			# PRINTING IS HERE
@@ -559,6 +604,8 @@ class Scheduler():
 
 			# Print to file
 			self.printToFile(f)
+
+		self.printMetric(f)
 
 		# Close the file	
 		f.close()
@@ -568,6 +615,10 @@ class Scheduler():
 		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -673,6 +724,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -723,11 +778,23 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queue
+			for dish in self.ready:
+				# Find the name of dish in dishWaiting
+				for i in self.dishWaiting:
+					if (i.getName() == dish[0]):
+						# Get the priority and add to the Summation of Waiting Time x Priority
+						self.sumWaitPrio = self.sumWaitPrio + i.getPriority()
+						break
+
 			# PRINTING IS HERE
 			# self.printStatus()
 
 			# Print to file
 			self.printToFile(f)
+
+		self.printMetric(f)
 
 		# Close the file	
 		f.close()
@@ -737,6 +804,10 @@ class Scheduler():
 		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -842,6 +913,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -911,11 +986,23 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queue
+			for dish in self.ready:
+				# Find the name of dish in dishWaiting
+				for i in self.dishWaiting:
+					if (i.getName() == dish[0]):
+						# Get the priority and add to the Summation of Waiting Time x Priority
+						self.sumWaitPrio = self.sumWaitPrio + i.getPriority()
+						break
+
 			# PRINTING IS HERE
 			# self.printStatus()
 
 			# Print to file
 			self.printToFile(f)
+
+		self.printMetric(f)
 
 		# Close the file	
 		f.close()
@@ -934,6 +1021,10 @@ class Scheduler():
 		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Ready, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -1044,6 +1135,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -1099,11 +1194,18 @@ class Scheduler():
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
 
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queue
+			for dish in self.ready:
+				self.sumWaitPrio = self.sumWaitPrio + dish[3]
+
 			# PRINTING IS HERE
 			# self.printStatus()
 
 			# Print to file
 			self.printToFilePrio(f)
+
+		self.printMetric(f)
 
 		# Close the file	
 		f.close()
@@ -1120,6 +1222,10 @@ class Scheduler():
 		# Open the file with append mode
 		f = open("output.csv", "w")
 		f.write("Time, Stove, Priority with Aging, SJF, First Come First Serve, Assistants, Remarks\n")
+
+		# For Weighted Average Waiting Time Metric
+		for i in self.dishWaiting:
+			self.totalWeight += i.getPriority()
 
 		while( (self.ourStove.isOccupied == True) or (self.ready1 != []) or (self.ready2 != []) or (self.ready3 != []) or (self.preparing != []) or (self.temporary != []) or (self.dishWaiting != [])):
 			self.remarks = []
@@ -1260,6 +1366,10 @@ class Scheduler():
 
 			if(self.ourStove.isOccupied() == True):						#Occupied
 				self.ourStove.decrTime()
+
+				# For Stove Utilization Metric
+				self.totalCook = self.totalCook + 1
+
 				if ( self.ourStove.getTime() == 0):
 					self.remarks.append(self.ourStove.getName() + " cooking ended")
 					returned = self.ourStove.remove()
@@ -1346,16 +1456,28 @@ class Scheduler():
 						else:
 							self.ourStove.preheat()
 							self.remarks.append("Preheating stove")
+
+			# For Weighted Average Waiting Time Metric
+			# Iterate through the dishes in ready queues
+			for dish in self.ready1:
+				self.sumWaitPrio = self.sumWaitPrio + dish[3]
+
+			for dish in self.ready2:
+				self.sumWaitPrio = self.sumWaitPrio + dish[3]
+
+			for dish in self.ready3:
+				self.sumWaitPrio = self.sumWaitPrio + dish[3]
+
 			# PRINTING IS HERE
 			# self.printStatus()
 
 			# Print to file
 			self.printToFileMulti(f)
 
+		self.printMetric(f)
+
 		# Close the file	
 		f.close()
-
-
 		
 class Dish():
 	def __init__(self):
@@ -1363,6 +1485,9 @@ class Dish():
 		self.time = 0
 		self.priority = 0
 		self.instructions = []
+
+	def setWaiting(self, newWaiting):
+		self.waiting = newWaiting
 
 	def setName(self, newName):
 		self.name = newName
@@ -1372,7 +1497,10 @@ class Dish():
 
 	def setPriority(self, newPriority):
 		self.priority = int(newPriority)
-
+	
+	def getWaiting(self):
+		return self.waiting
+	
 	def getName(self):
 		return self.name
 
@@ -1431,7 +1559,8 @@ class Iron_Chef():
 			
 			temp = f.readline()							#Temp would hold the priority value
 			temp = ((temp.strip("\n")).split(" "))[1]
-		
+			
+
 			self.dishWaiting[x].setPriority(temp)		#Put Priority into respective object
 
 			for instruction in f.readlines():			#Parse instructions, put the instructions into the object
@@ -1477,7 +1606,6 @@ class Iron_Chef():
 		dupli = copy.deepcopy(self.dishWaiting)
 		h = Scheduler(list(dupli))
 		h.Multi()
-
 
 class GUI:
 	def __init__(self):
@@ -1561,7 +1689,6 @@ class GUI:
 		self.TQEntry = Entry(GerRREntryFrame, width=6, justify=CENTER, relief=FLAT, font=("Consolas", 11))
 		self.TQEntry.pack(side=LEFT, pady=5, padx=5, fill=X,)
 		self.TQEntry.focus_set()
-
 
 		# Buttons again
 		SJF1 = Button(MainFrame, text="Shortest Job First (No Preemption)", font=("Consolas", 11), cursor="hand2", relief=FLAT, bg="LIGHTCYAN2", command=lambda: self.ButtonSJF1())
