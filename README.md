@@ -3,12 +3,17 @@
 
 ### Progress So Far: 
 
+Arc 11
+---
++ Finished Metrics Printing
++ Documentation to go.
+
 Arc 10
 ---
 + Fixed Command Prompt Error Message: GenRR TQ Input
 + Changed Test Cases (back to sir's)
 
-Arc 9
+Arc 9       
 ---
 + Please fix output.csv command prompt error message
 + Finalize Documentation
